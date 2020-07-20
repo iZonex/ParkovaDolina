@@ -1,0 +1,24 @@
+from telebot import types
+
+class OnJoinGroupAction:
+
+    TEXT = (
+        "Ласкаво просимо вас {first_name} {last_name}!\n"
+        "В чат групи інвесторів ЖК Паркова Долина!\n"
+        "Будь ласка зв'яжіться зі мною {bot_name} перед початком спілкування.\n"
+    )
+
+    BOT_NAME = "@ParkValleyBot"
+
+    def __init__(self, bot, dao):
+        self.bot = bot
+        self.dao = dao
+
+    def action(self, message):
+        member = message.from_user
+        text_body = self.TEXT.format(
+            first_name=member.first_name,
+            last_name=member.last_name,
+            bot_name=self.BOT_NAME
+        )
+        self.bot.reply_to(message, text_body)
