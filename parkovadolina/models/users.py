@@ -25,7 +25,7 @@ class UsersModel:
         if self._data and not force:
             return self._data
         result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])
-        self._data = [(User(self, uid, int(user_id), bool(agreement))) for uid, user_id, agreement in result]
+        self._data = [(User(self, data[0], int(data[1]), bool(data[2]))) for data in result if data]
         return self._data
 
     def get_by_user_id(self, user_id):
