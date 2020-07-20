@@ -4,7 +4,7 @@ from core.sheet_api import dao
 from core.router import Router
 from screens.router import routes, default_route
 from actions.important_news_action import ImportantNewsAction
-from actions.on_join_action import OnJoinGroupAction
+from actions.on_join_group_action import OnJoinGroupAction
 
 # https://docs.google.com/spreadsheets/d/1pdaG9ePKEtn1bvvghKdyl5cVD4A4S4UyxU8Ibo9e4hI/edit?usp=sharing
 
