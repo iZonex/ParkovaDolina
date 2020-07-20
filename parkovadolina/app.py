@@ -12,6 +12,7 @@ from screens.rules_screen import RulesScreen
 from screens.communication_screen import CommunicationScreen
 from screens.chats_list_screen import ChatsListScreen
 from screens.forum_screen import ForumScreen
+from screens.ig_screen import IGScreen
 from actions.important_news_action import ImportantNewsAction
 
 # https://docs.google.com/spreadsheets/d/1pdaG9ePKEtn1bvvghKdyl5cVD4A4S4UyxU8Ibo9e4hI/edit?usp=sharing
@@ -39,8 +40,10 @@ rules_screen = RulesScreen(bot, dao).screen
 communcation_screen = CommunicationScreen(bot, dao).screen
 chats_list_screen = ChatsListScreen(bot, dao).screen
 forum_screen = ForumScreen(bot, dao).screen
+ig_screen = IGScreen(bot, dao).screen
 important_news_screen = ImportantNewsScreen(bot, dao).screen
 important_news_action = ImportantNewsAction(bot, dao).action
+
 
 @bot.message_handler(content_types=['new_chat_members'])
 def on_user_joins(message):
@@ -62,6 +65,8 @@ def main_actions(message):
 def private_chat(message):
     if message.text.startswith("Група підтверджених інвесторів"):
         checked_group_screen(message)
+    elif message.text.startswith("🎖Iніціативна група"):
+        ig_screen(message)
     elif message.text.startswith("Персона,") or message.text.startswith("Персони"):
         persons_screen(message)
     elif message.text.startswith("Правила"):

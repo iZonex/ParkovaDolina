@@ -5,13 +5,11 @@ class IGModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
+        self._data = None
 
     def get(self):
-        result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute()
-        values = result.get('values', [])
-        if not values:
-            print('No data found.')
-        else:
-            print('Name, Major:')
-            for row in values:
-              print(row)
+        if not self._data:
+            result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute()
+            values = result.get('values', [])
+            self._data = [" ".join(row) for row in values]
+        return self._data
