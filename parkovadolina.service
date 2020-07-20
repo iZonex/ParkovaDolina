@@ -1,0 +1,13 @@
+[Unit]
+Description=ParkovaDolinaBot
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/srv/ParkovaDolina/parkovadolina
+ExecStart=/srv/ParkovaDolina/env/bin/python app.py
+Restart=failure
+
+[Install]
+WantedBy=multi-user.target
