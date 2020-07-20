@@ -17,3 +17,7 @@ class IGScreen:
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
         keyboard.add(types.KeyboardButton(text="🚪Вихід"))
         self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode='HTML')
+
+    @staticmethod
+    def match(message):
+        return message.text.startswith("🎖Iніціативна група") or False

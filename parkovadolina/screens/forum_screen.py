@@ -18,3 +18,7 @@ class ForumScreen:
         keyboard.add(*self.sections)
         text_body = f"Посилання на форум:\n{self.FORUM_LINK}"
         self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard)
+
+    @staticmethod
+    def match(message):
+        return message.text.startswith("Форум інвесторів") or False

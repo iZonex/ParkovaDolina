@@ -34,3 +34,9 @@ class FAQScreen:
             self.details(message)
         else:
             self.menu(message)
+
+    @staticmethod
+    def match(message):
+        if message.text.startswith("Запитання,") or message.text.startswith("Відповіді на запитання"):
+            return True
+        return False

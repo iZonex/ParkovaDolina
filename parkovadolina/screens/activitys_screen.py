@@ -1,6 +1,6 @@
 from telebot import types
 
-class BuildingActivitysScreen:
+class ActivitysScreen:
 
     SECTIONS = ["🚪Вихід"]
 
@@ -27,3 +27,7 @@ class BuildingActivitysScreen:
                 f'<a href="{i.source_link}">Посилання</a>'
             )
             self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode='HTML')
+
+    @staticmethod
+    def match(message):
+        return message.text.startswith("Активності") or False

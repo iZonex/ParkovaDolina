@@ -39,3 +39,11 @@ class PersonsScreen:
             self.details(message)
         else:
             self.menu(message)
+
+    @staticmethod
+    def match(message):
+        if message.text.startswith("Персона,") or message.text.startswith("Персони"):
+            return True
+        return False
+
+            

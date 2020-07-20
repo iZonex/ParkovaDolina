@@ -24,3 +24,7 @@ class ImportantNewsScreen:
                 )
                 self.bot.send_message(message.chat.id, message_text)
             self.bot.send_message(message.chat.id, f"---------------", reply_markup=keyboard, parse_mode='HTML')
+
+    @staticmethod
+    def match(message):
+        return message.text.startswith("Важливі новини") or False

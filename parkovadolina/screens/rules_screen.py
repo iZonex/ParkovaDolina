@@ -31,3 +31,9 @@ class RulesScreen:
             self.rules_confirm(message)
         else:
             self.rules_chats(message)
+
+    @staticmethod
+    def match(message):
+        if message.text.startswith("🏁 Згоден з правилами") or message.text.startswith("Правила"):
+            return True
+        return False

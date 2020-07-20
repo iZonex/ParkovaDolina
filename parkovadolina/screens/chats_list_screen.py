@@ -36,3 +36,9 @@ class ChatsListScreen:
                 keyboard.add(types.KeyboardButton(text=i))
             keyboard.add(types.KeyboardButton(text="🚪Вихід"))
             self.bot.send_message(message.chat.id, "Оберіть вашу секцію.", reply_markup=keyboard)
+
+    @staticmethod
+    def match(message):
+        if message.text.startswith("Чати інвесторів") or message.text.startswith("Чат"):
+            return True
+        return False

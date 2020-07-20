@@ -16,3 +16,7 @@ class CommunicationScreen:
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
         keyboard.add(*self.sections)
         self.bot.send_message(message.chat.id, "Оберіть тип зв'язку.", reply_markup=keyboard)
+
+    @staticmethod
+    def match(message):
+        return message.text.startswith("Комунікація") or False
