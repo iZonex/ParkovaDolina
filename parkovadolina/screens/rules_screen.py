@@ -15,7 +15,9 @@ class RulesScreen:
     def rules_confirm(self, message):
         user_id = message.from_user.id
         self.dao.users.create(user_id)
-        self.bot.send_message(message.chat.id, "Дякую за те що прийняли правила")
+        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
+        keyboard.add(types.KeyboardButton(text="🚪Вихід"))
+        self.bot.send_message(message.chat.id, "Дякую за те що прийняли правила", reply_markup=keyboard)
 
     def rules_chats(self, message):
         text_body = "Правила чату:\n\n"
