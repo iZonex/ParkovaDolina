@@ -17,8 +17,8 @@ class OnJoinGroupAction:
     def action(self, message):
         member = message.from_user
         text_body = self.TEXT.format(
-            first_name=member.first_name,
-            last_name=member.last_name,
+            first_name=member.first_name or "",
+            last_name=member.last_name or "",
             bot_name=self.BOT_NAME
         )
         self.bot.reply_to(message, text_body)
