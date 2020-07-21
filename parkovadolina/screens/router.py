@@ -9,6 +9,7 @@ from screens.communication_screen import CommunicationScreen
 from screens.chats_list_screen import ChatsListScreen
 from screens.forum_screen import ForumScreen
 from screens.ig_screen import IGScreen
+from screens.building_progress_screen import BuildingScreen
 
 routes = (
     CheckedGroupScreen,
@@ -20,7 +21,8 @@ routes = (
     ChatsListScreen,
     ForumScreen,
     IGScreen,
-    ImportantNewsScreen
+    ImportantNewsScreen,
+    BuildingScreen
 )
 
 default_route = MainScreen

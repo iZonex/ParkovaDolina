@@ -5,6 +5,8 @@ class ChatsListScreen:
     SECTIONS = ["🚪Вихід"]
 
     CHATS = {
+        "Чат важливі повідомлення": "t.me/parkovadoluna",
+        "Чат загальний групи": " t.me/parkovadolyna",
         "Чат Будинка №1 секція №1": "http://t.me/parkovadolyna1",
         "Чат Будинка №1 секція №2": "http://t.me/parkovadolyna2",
         "Чат Будинка №1 секція №3": "http://t.me/parkovadolyna3",

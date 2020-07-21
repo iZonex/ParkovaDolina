@@ -13,7 +13,7 @@ from models.persons import PersonsModel
 from models.activitys import ActivitysModel
 from models.checked_group import CheckedGroupModel
 from models.important_news import ImportantNewsModel
-
+from models.building_plan import BuildingPlanModel
 
 class SpreadSheet:
 
@@ -30,6 +30,7 @@ class SpreadSheet:
         self.activity = ActivitysModel(self._service, sheet_id)
         self.checked_group = CheckedGroupModel(self._service, sheet_id)
         self.important_news = ImportantNewsModel(self._service, sheet_id)
+        self.building_plan = BuildingPlanModel(self._service, sheet_id)
 
     def _init_service(self):
         creds = None

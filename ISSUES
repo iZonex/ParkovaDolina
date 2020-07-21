@@ -1,3 +1,4 @@
 1. Back button required.
 2. Move to main page after complete.
 3. Long dilay between registration and next actions.
+4. Add cache for dao objects.
