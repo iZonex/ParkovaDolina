@@ -27,4 +27,4 @@ class ImportantNewsScreen:
 
     @staticmethod
     def match(message):
-        return message.text.startswith("🗞 Важливі новини") or False
+        return message.text.startswith("🗞Важливі новини") or False
