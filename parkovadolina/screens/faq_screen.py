@@ -17,7 +17,7 @@ class FAQScreen:
         faq = self.dao.faq.get_answer_by_question(question)
         message_text = f"{faq.answer}\n\n"
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
-        keyboard.add(types.KeyboardButton(text="Відповіді на запитання"))
+        keyboard.add(types.KeyboardButton(text="🔍Відповіді на запитання"))
         keyboard.add(types.KeyboardButton(text="🚪Вихід"))
         self.bot.send_message(message.chat.id, message_text, reply_markup=keyboard)
 
