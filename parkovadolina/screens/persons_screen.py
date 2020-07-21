@@ -30,7 +30,7 @@ class PersonsScreen:
             f'<a href="{person.link}">Посилання</a>\n\n'
         )
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
-        keyboard.add(types.KeyboardButton(text="Персони"))
+        keyboard.add(types.KeyboardButton(text="🧩Персони"))
         keyboard.add(types.KeyboardButton(text="🚪Вихід"))
         self.bot.send_message(message.chat.id, message_text, reply_markup=keyboard, parse_mode="HTML")
 
@@ -42,7 +42,7 @@ class PersonsScreen:
 
     @staticmethod
     def match(message):
-        if message.text.startswith("Персона,") or message.text.startswith("Персони"):
+        if message.text.startswith("Персона,") or message.text.startswith("🧩Персони"):
             return True
         return False
 

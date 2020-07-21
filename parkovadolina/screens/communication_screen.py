@@ -19,4 +19,4 @@ class CommunicationScreen:
 
     @staticmethod
     def match(message):
-        return message.text.startswith("Комунікація") or False
+        return message.text.startswith("👂Комунікація") or False

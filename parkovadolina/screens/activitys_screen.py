@@ -30,4 +30,4 @@ class ActivitysScreen:
 
     @staticmethod
     def match(message):
-        return message.text.startswith("Активності") or False
+        return message.text.startswith("🗓Активності") or False

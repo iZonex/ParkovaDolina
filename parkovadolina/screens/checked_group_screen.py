@@ -20,4 +20,4 @@ class CheckedGroupScreen:
 
     @staticmethod
     def match(message):
-        return message.text.startswith("Група підтверджених інвесторів") or False
+        return message.text.startswith("🤝Група підтверджених інвесторів") or False
