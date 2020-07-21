@@ -19,26 +19,23 @@ class UsersModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
-        self._data = []
+        self._data = self.get_data()
 
-    def get(self, force=False):
-        if self._data and not force:
-            return self._data
+    def get_data(self):
         result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])
-        self._data = [(User(self, data[0], int(data[1]), bool(data[2]))) for data in result if data]
+        return {int(data[1]): User(self, data[0], int(data[1]), bool(data[2])) for data in result if data}
+
+    def get(self):
         return self._data
 
     def get_by_user_id(self, user_id):
-        if not self._data:
-            self.get()
-        for i in self._data:
-            if i.user_id == user_id:
-                return i
-        return None
+        return self._data.get(user_id, None)
         
     def create(self, user_id):
-        next_row = len(self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])) + 2
-        values = [[next_row, user_id, 1]]
-        body = {'values': values, 'majorDimension' : 'ROWS'}
-        self._service.values().update(spreadsheetId=self._sheet, range=f'Користувачі!A{next_row}:C', valueInputOption='RAW', body=body).execute()
-        self.get(force=True)
+        if not self.get_by_user_id(user_id):
+            next_row = len(self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])) + 2
+            values = [[next_row, user_id, 1]]
+            body = {'values': values, 'majorDimension' : 'ROWS'}
+            self._data[user_id] = User(self, next_row, int(user_id), bool(1))
+            self._service.values().update(spreadsheetId=self._sheet, range=f'Користувачі!A{next_row}:C', valueInputOption='RAW', body=body).execute()
+            
