@@ -1,4 +1,5 @@
 import pickle
+import socket
 import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -44,7 +45,7 @@ class SpreadSheet:
                 creds = flow.run_local_server(port=0)
             with open('token.pickle', 'wb') as token:
                 pickle.dump(creds, token)
-
+        socket.setdefaulttimeout(600)
         service = build('sheets', 'v4', credentials=creds)
         return service.spreadsheets()
 
