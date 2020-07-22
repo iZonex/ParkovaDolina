@@ -5,7 +5,7 @@ from .forum_screen import ForumScreen
 
 class CommunicationRouter(Router):
 
-    authorized_routes = (
+    routes = (
         ChatsListScreen,
         ForumScreen,
     )

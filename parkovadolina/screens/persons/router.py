@@ -4,7 +4,7 @@ from .details_screen import PersonsDetailScreen
 
 class PersonsRouter(Router):
 
-    authorized_routes = (
+    routes = (
         PersonsDetailScreen,
     )
 
