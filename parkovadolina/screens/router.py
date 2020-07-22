@@ -1,13 +1,14 @@
 from core.router import Router
-from screens.important_news_screen import ImportantNewsScreen
-from screens.main_screen import MainScreen
-from screens.checked_group_screen import CheckedGroupScreen
-from screens.faq_screen import FAQScreen
-from screens.activitys_screen import ActivitysScreen
-from screens.persons.router import PersonsRouter
-from screens.ig_screen import IGScreen
-from screens.building_progress_screen import BuildingScreen
-from screens.communication.router import CommunicationRouter
+from .important_news_screen import ImportantNewsScreen
+from .main_screen import MainScreen
+from .checked_group_screen import CheckedGroupScreen
+from .faq_screen import FAQScreen
+from .activitys_screen import ActivitysScreen
+from .persons.router import PersonsRouter
+from .ig_screen import IGScreen
+from .building_progress_screen import BuildingScreen
+from .communication.router import CommunicationRouter
+from .rules_screen import RulesScreen
 
 
 class MainRouter(Router):
@@ -21,7 +22,8 @@ class MainRouter(Router):
         CommunicationRouter,
         IGScreen,
         ImportantNewsScreen,
-        BuildingScreen
+        BuildingScreen,
+        RulesScreen,
     )
 
     default_route = MainScreen

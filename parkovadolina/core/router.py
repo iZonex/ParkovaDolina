@@ -5,16 +5,12 @@ class Router(AbstractRouter):
 
     default_route=None
     authorized_routes=[]
-    default_unauthorized_route=None
-    unauthorized_routes=[]
 
     def __init__(self, bot, dao):
         self.bot = bot
         self.dao = dao
         self.default_route = self.default_route(bot,dao) if self.default_route else None 
         self.authorized_routes = [i(bot,dao) for i in self.authorized_routes] if self.authorized_routes else None
-        self.default_unauthorized_route = self.default_unauthorized_route(bot,dao) if self.default_unauthorized_route else None
-        self.unauthorized_routes = [i(bot,dao) for i in self.unauthorized_routes] if self.unauthorized_routes else None
 
     def routing(self, message, routes, default_route):
         for route in routes:
@@ -38,15 +34,9 @@ class Router(AbstractRouter):
                     user.register_context(message.text)
             else:
                 user.register_context(message.text)
-        user.get_context()
+            user.get_context()
 
     def match_pattern(self, message):
-        user = self.dao.users.get_by_user_id(message.from_user.id)
-        route = None
-        if user:
-            route = self.routing(message, self.authorized_routes, self.default_route)
-        elif self.default_unauthorized_route and self.unauthorized_routes:
-            route = self.routing(message, self.unauthorized_routes, self.default_unauthorized_route)
-        if route:
+        if self.routing(message, self.authorized_routes, self.default_route):
             return True
         return False
