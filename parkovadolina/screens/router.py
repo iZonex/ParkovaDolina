@@ -4,11 +4,9 @@ from screens.main_screen import MainScreen
 from screens.checked_group_screen import CheckedGroupScreen
 from screens.faq_screen import FAQScreen
 from screens.activitys_screen import ActivitysScreen
-from screens.persons_screen import PersonsScreen
-from screens.rules_screen import RulesScreen
+from screens.persons.router import PersonsRouter
 from screens.ig_screen import IGScreen
 from screens.building_progress_screen import BuildingScreen
-from screens.unauthorized_menu_screen import UnathorizedMenuScreen
 from screens.communication.router import CommunicationRouter
 
 
@@ -19,7 +17,7 @@ class MainRouter(Router):
         CheckedGroupScreen,
         FAQScreen,
         ActivitysScreen,
-        PersonsScreen,
+        PersonsRouter,
         CommunicationRouter,
         IGScreen,
         ImportantNewsScreen,
@@ -27,9 +25,3 @@ class MainRouter(Router):
     )
 
     default_route = MainScreen
-
-    unauthorized_routes = (
-        RulesScreen,
-    )
-
-    default_unauthorized_route = UnathorizedMenuScreen

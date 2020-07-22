@@ -22,6 +22,4 @@ class UnathorizedMenuScreen:
 
     @staticmethod
     def match(message):
-        if message.text.startswith(EXIT) or message.text.startswith("Головне меню"):
-            return True
-        return False
+        return any(message.text.startswith(EXIT), message.text.startswith("Головне меню")

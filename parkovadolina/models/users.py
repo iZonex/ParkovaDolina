@@ -8,12 +8,19 @@ class User:
         self.agreement = agreement
         self._context = []
 
+    def get_index(self, text):
+        try:
+            return self._context.index(text)
+        except ValueError:
+            return None
+
     def register_context(self, text):
+        cut_index = self.get_index(text)
         if text == EXIT or text == "Головне меню":
             self._context = []
-        elif self._context and self._context[-1] != text:
-            self._context.append(text)
-        elif not self._context:
+        elif cut_index != None:
+            self._context = self._context[:cut_index+1]
+        else:
             self._context.append(text)
 
     def get_context(self):
