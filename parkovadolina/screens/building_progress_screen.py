@@ -71,4 +71,4 @@ class BuildingScreen:
 
     @staticmethod
     def match(message):
-        return message.text.startswith("🗓Будівництво") or False
+        return message.text.startswith("🏗Будівництво") or False
