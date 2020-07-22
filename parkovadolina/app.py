@@ -2,7 +2,7 @@ import os
 import telebot
 from core.sheet_api import dao
 from core.router import Router
-from screens.router import routes, default_route
+from screens.router import authorized_routes, default_route, default_unauthorized_route, unauthorized_routes
 from actions.important_news_action import ImportantNewsAction
 from actions.on_join_group_action import OnJoinGroupAction
 
@@ -12,7 +12,7 @@ bot = telebot.TeleBot(
     os.getenv("BOT_KEY", "1340390485:AAF5UnF-GgncRT52D9MO6E6EoZ_J_0vnrZk"))
 
 important_news_action = ImportantNewsAction(bot, dao).action
-router = Router(bot, dao, default_route, routes)
+router = Router(bot, dao, default_route, authorized_routes, default_unauthorized_route, unauthorized_routes)
 on_join_action = OnJoinGroupAction(bot, dao)
 
 

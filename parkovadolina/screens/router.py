@@ -10,13 +10,13 @@ from screens.chats_list_screen import ChatsListScreen
 from screens.forum_screen import ForumScreen
 from screens.ig_screen import IGScreen
 from screens.building_progress_screen import BuildingScreen
+from screens.unauthorized_menu_screen import UnathorizedMenuScreen
 
-routes = (
+authorized_routes = (
     CheckedGroupScreen,
     FAQScreen,
     ActivitysScreen,
     PersonsScreen,
-    RulesScreen,
     CommunicationScreen,
     ChatsListScreen,
     ForumScreen,
@@ -26,3 +26,9 @@ routes = (
 )
 
 default_route = MainScreen
+
+unauthorized_routes = (
+    RulesScreen,
+)
+
+default_unauthorized_route = UnathorizedMenuScreen
