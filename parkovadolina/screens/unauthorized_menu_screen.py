@@ -1,3 +1,4 @@
+from core.constants import EXIT
 from telebot import types
 
 
@@ -18,3 +19,9 @@ class UnathorizedMenuScreen:
         )
         self.bot.send_message(
             message.chat.id, f"{self.WELCOME_TEXT}\n\n{self.RULES_NOTICE}", reply_markup=keyboard)
+
+    @staticmethod
+    def match(message):
+        if message.text.startswith(EXIT) or message.text.startswith("Головне меню"):
+            return True
+        return False

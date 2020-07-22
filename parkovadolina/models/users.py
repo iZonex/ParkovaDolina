@@ -9,7 +9,7 @@ class User:
         self._context = []
 
     def register_context(self, text):
-        if text == EXIT:
+        if text == EXIT or text == "Головне меню":
             self._context = []
         elif self._context and self._context[-1] != text:
             self._context.append(text)

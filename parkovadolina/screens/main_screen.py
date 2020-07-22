@@ -1,3 +1,4 @@
+from core.constants import EXIT
 from telebot import types
 
 
@@ -25,3 +26,9 @@ class MainScreen:
         else:
             self.bot.send_message(
                 message.chat.id, "Головне меню", reply_markup=keyboard)
+
+    @staticmethod
+    def match(message):
+        if message.text.startswith(EXIT) or message.text.startswith("Головне меню"):
+            return True
+        return False
