@@ -17,9 +17,9 @@ class BuildingPlanModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
-        self._data = self._get_building_data()
+        self._data = self._load_data()
 
-    def _get_building_data(self):
+    def _load_data(self):
         data = {}
         rows = self._service.values().get(spreadsheetId=self._sheet,
                                             range=self.RANGE_ID).execute().get('values', [])

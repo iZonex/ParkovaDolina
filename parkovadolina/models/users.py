@@ -40,9 +40,9 @@ class UsersModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
-        self._data = self.get_data()
+        self._data = self.load_data()
 
-    def get_data(self):
+    def load_data(self):
         result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])
         return {int(data[1]): User(self, data[0], int(data[1]), bool(data[2])) for data in result if data}
 

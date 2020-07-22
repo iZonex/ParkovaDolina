@@ -16,14 +16,17 @@ class ActivitysModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
-        self._data = []
+        self._data = self.load_data()
 
-    def get(self, force=False):
+    def load_data(self):
         result = self._service.values().get(spreadsheetId=self._sheet,
                                             range=self.RANGE_ID).execute().get('values', [])
 
         self._data = [Activity(self, title, actions_description, source_link, due_date, status)
                       for title, actions_description, source_link, due_date, status in result]
+        return self._data
+
+    def get(self, force=False):
         return self._data
 
     def get_activity_by_title(self, title):

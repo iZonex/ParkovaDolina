@@ -5,11 +5,12 @@ class CheckedGroupModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
-        self._data = None
+        self._data = self.load_data()
+
+    def load_data(self):
+        result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute()
+        values = result.get('values', [])
+        return [" ".join(row) for row in values]
 
     def get(self):
-        if not self._data:
-            result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute()
-            values = result.get('values', [])
-            self._data = [" ".join(row) for row in values]
         return self._data

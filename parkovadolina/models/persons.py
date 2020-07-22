@@ -17,11 +17,13 @@ class PersonsModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
-        self._data = []
+        self._data = self.load_data()
+
+    def load_data(self):
+        result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])
+        return [Person(self, full_name, photo, short_description, link) for full_name, photo, short_description, link in result]
 
     def get(self, force=False):
-        result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])
-        self._data = [Person(self, full_name, photo, short_description, link) for full_name, photo, short_description, link in result]
         return self._data
 
     def get_person_by_full_name(self, full_name):
