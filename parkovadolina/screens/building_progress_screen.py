@@ -59,7 +59,7 @@ class BuildingScreen:
         for i in plans.values():
             text_states = self.generate_states(i.get_expected_state())
             text_body = (
-                f'<strong>{self.BUILDING_NUMBERS.get(i.title, "").upper()}</strong>\n\n'
+                f'<strong>🏗{self.BUILDING_NUMBERS.get(i.title, "").upper()}</strong>\n\n'
                 f'<strong>План будівництва на {i.get_date()}:</strong>\n'
                 f"{text_states}\n\n"
                 f'<strong>Статус будівництва: {self.STATUS_MAP["2"]}</strong>'
