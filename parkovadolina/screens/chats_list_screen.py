@@ -1,8 +1,9 @@
 from telebot import types
+from core.constants import EXIT
 
 class ChatsListScreen:
 
-    SECTIONS = ["🚪Вихід"]
+    SECTIONS = [EXIT]
 
     CHATS = {
         "Чат важливі повідомлення": "t.me/parkovadoluna",
@@ -27,7 +28,14 @@ class ChatsListScreen:
     def _build_sections(self):
         return [types.KeyboardButton(i) for i in self.SECTIONS]
 
+    def skip_context(self, text):
+        if text.startswith("Чат "):
+            return True
+        return False
+
     def screen(self, message):
+        user = self.dao.users.get_by_user_id(message.from_user.id)
+        user.get_context()
         bulding_chat = self.CHATS.get(message.text, None)
         if bulding_chat:
             text_body = f"Посилання на чат {message.text}:\n{bulding_chat}"
@@ -36,7 +44,7 @@ class ChatsListScreen:
             keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
             for i in self.CHATS.keys():
                 keyboard.add(types.KeyboardButton(text=i))
-            keyboard.add(types.KeyboardButton(text="🚪Вихід"))
+            keyboard.add(types.KeyboardButton(text=EXIT))
             self.bot.send_message(message.chat.id, "Оберіть вашу секцію.", reply_markup=keyboard)
 
     @staticmethod

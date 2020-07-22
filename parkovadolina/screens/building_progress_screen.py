@@ -1,10 +1,10 @@
 from telebot import types
-
+from core.constants import EXIT
 # get_actual_state_of_month == choiced_state. if less then actual state. Issues with building, If equail Normal, If more great
 
 class BuildingScreen:
 
-    SECTIONS = ["🚪Вихід"]
+    SECTIONS = [EXIT]
 
     BUILDING_STATUS_MAP = {
         "1": "Котлован",
@@ -66,7 +66,7 @@ class BuildingScreen:
             )
             self.bot.send_message(message.chat.id, text_body, parse_mode='HTML')
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
-        keyboard.add(types.KeyboardButton(text="🚪Вихід"))
+        keyboard.add(types.KeyboardButton(text=EXIT))
         self.bot.send_message(message.chat.id, "Допомагай тримати ці дані актуальними", reply_markup=keyboard)
 
     @staticmethod

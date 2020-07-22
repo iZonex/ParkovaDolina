@@ -1,8 +1,9 @@
 from telebot import types
+from core.constants import EXIT
 
 class CommunicationScreen:
 
-    SECTIONS = ["Чати інвесторів", "Форум інвесторів", "🚪Вихід"]
+    SECTIONS = ["Чати інвесторів", "Форум інвесторів", EXIT]
 
     def __init__(self, bot, dao):
         self.bot = bot

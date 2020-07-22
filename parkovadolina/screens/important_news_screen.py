@@ -1,5 +1,6 @@
 from telebot import types
 from datetime import datetime
+from core.constants import EXIT
 
 class ImportantNewsScreen:
 
@@ -10,7 +11,7 @@ class ImportantNewsScreen:
     def screen(self, message):
         news_list = self.dao.important_news.get()
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
-        keyboard.add(types.KeyboardButton(text="🚪Вихід"))
+        keyboard.add(types.KeyboardButton(text=EXIT))
         
         if not news_list:
             self.bot.send_message(message.chat.id, "Вибачте поки немає важливих новин.", reply_markup=keyboard, parse_mode='HTML')

@@ -1,8 +1,9 @@
 from telebot import types
+from core.constants import EXIT
 
 class ForumScreen:
 
-    SECTIONS = ["🚪Вихід"]
+    SECTIONS = [EXIT]
     FORUM_LINK = "https://parkova-dolyna.com/"
 
     def __init__(self, bot, dao):

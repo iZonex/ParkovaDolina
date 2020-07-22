@@ -1,8 +1,9 @@
 from telebot import types
+from core.constants import EXIT
 
 class RulesScreen:
 
-    SECTIONS = ["🚪Вихід"]
+    SECTIONS = [EXIT]
 
     def __init__(self, bot, dao):
         self.bot = bot
@@ -16,7 +17,7 @@ class RulesScreen:
         user_id = message.from_user.id
         self.dao.users.create(user_id)
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
-        keyboard.add(types.KeyboardButton(text="🚪Вихід"))
+        keyboard.add(types.KeyboardButton(text=EXIT))
         self.bot.send_message(message.chat.id, "Дякую за те що прийняли правила", reply_markup=keyboard)
 
     def rules_chats(self, message):
@@ -25,7 +26,7 @@ class RulesScreen:
         available_options = ["🤝Згоден з правилами"]
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
         [ keyboard.add(types.KeyboardButton(text=i)) for i in available_options]
-        keyboard.add(types.KeyboardButton(text="🚪Вихід"))
+        keyboard.add(types.KeyboardButton(text=EXIT))
         self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard)
 
     def screen(self, message):

@@ -1,8 +1,9 @@
 from telebot import types
+from core.constants import EXIT
 
 class ActivitysScreen:
 
-    SECTIONS = ["🚪Вихід"]
+    SECTIONS = [EXIT]
 
     def __init__(self, bot, dao):
         self.bot = bot
@@ -15,7 +16,7 @@ class ActivitysScreen:
     def screen(self, message):
         activitys = self.dao.activity.get()
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
-        keyboard.add(types.KeyboardButton(text="🚪Вихід"))
+        keyboard.add(types.KeyboardButton(text=EXIT))
         if not activitys:
             text_body = "Немає активності"
             self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard,)

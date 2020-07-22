@@ -1,8 +1,9 @@
 from telebot import types
+from core.constants import EXIT
 
 class FAQScreen:
 
-    SECTIONS = ["🚪Вихід"]
+    SECTIONS = [EXIT]
 
     def __init__(self, bot, dao):
         self.bot = bot
@@ -18,7 +19,7 @@ class FAQScreen:
         message_text = f"{faq.answer}\n\n"
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
         keyboard.add(types.KeyboardButton(text="🔍Відповіді на запитання"))
-        keyboard.add(types.KeyboardButton(text="🚪Вихід"))
+        keyboard.add(types.KeyboardButton(text=EXIT))
         self.bot.send_message(message.chat.id, message_text, reply_markup=keyboard)
 
     def menu(self, message):
@@ -26,7 +27,7 @@ class FAQScreen:
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
         for i in faqs:
             keyboard.add(types.KeyboardButton(text=f"Запитання, {i.question}"))
-        keyboard.add(types.KeyboardButton(text="🚪Вихід"))
+        keyboard.add(types.KeyboardButton(text=EXIT))
         self.bot.send_message(message.chat.id, "Оберить зпитання.", reply_markup=keyboard)
 
     def screen(self, message):

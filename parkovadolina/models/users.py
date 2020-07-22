@@ -1,3 +1,4 @@
+from core.constants import EXIT
 class User:
 
     def __init__(self, dao, uid, user_id, agreement):
@@ -5,6 +6,19 @@ class User:
         self.uid = uid
         self.user_id = user_id
         self.agreement = agreement
+        self._context = []
+
+    def register_context(self, text):
+        if text == EXIT:
+            self._context = []
+        elif self._context and self._context[-1] != text:
+            self._context.append(text)
+        elif not self._context:
+            self._context.append(text)
+
+    def get_context(self):
+        print(f"User {self.user_id} Context: {' >>> '.join(self._context)}")
+        return self._context
 
     def save(self):
         self.dao.update(self.uid, self.user_id, self.agreement)
