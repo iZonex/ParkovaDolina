@@ -12,11 +12,14 @@ class FAQModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
-        self._data = []
+        self._data = self.load_data()
+
+    def load_data(self):
+        result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])
+        data = [FAQ(self, question, answer) for question, answer in result]
+        return data
 
     def get(self, force=False):
-        result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])
-        self._data = [FAQ(self, question, answer) for question, answer in result]
         return self._data
 
     def get_answer_by_question(self, question):
