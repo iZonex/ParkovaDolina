@@ -14,7 +14,7 @@ from .rules_screen import RulesScreen
 class MainRouter(Router):
 
     root = True
-    authorized_routes = (
+    routes = (
         CheckedGroupScreen,
         FAQScreen,
         ActivitysScreen,
