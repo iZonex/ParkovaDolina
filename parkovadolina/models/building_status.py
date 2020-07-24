@@ -2,10 +2,24 @@ import datetime
 
 class BuildingStatus:
 
-    def __init__(self, dao, title):
+    BUILDING_NUMBERS = {
+        "1": "Будинок №1 Секція №1-3",
+        "2": "Будинок №1 Секція №4-6",
+        "3": "Будинок №1 Секція №7-9",
+        "4": "Будинок №2 Секція №1",
+        "5": "Будинок №2 Секція №2",
+        "6": "Будинок №2 Секція №3",
+        "7": "Будинок №2 Секція №4",
+    }
+
+    def __init__(self, dao, title_id):
         self.dao = dao
-        self.title = title
+        self.title_id = title_id
         self.states = {}
+
+    @property
+    def title(self):
+        return self.BUILDING_NUMBERS.get(self.title_id)
 
     def get_expected_state(self):
         return self.states.get([datetime.datetime.now().replace(day=1).date()])

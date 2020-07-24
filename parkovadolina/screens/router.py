@@ -6,7 +6,7 @@ from .faq_screen import FAQScreen
 from .activitys_screen import ActivitysScreen
 from .persons.router import PersonsRouter
 from .ig_screen import IGScreen
-from .building_progress_screen import BuildingScreen
+from .building_progress.router import BuildingRouter
 from .communication.router import CommunicationRouter
 from .rules_screen import RulesScreen
 
@@ -22,7 +22,7 @@ class MainRouter(Router):
         CommunicationRouter,
         IGScreen,
         ImportantNewsScreen,
-        BuildingScreen,
+        BuildingRouter,
         RulesScreen,
     )
 
