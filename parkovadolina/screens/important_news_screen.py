@@ -17,7 +17,7 @@ class ImportantNewsScreen:
             self.bot.send_message(message.chat.id, "Вибачте поки немає важливих новин.", reply_markup=keyboard, parse_mode='HTML')
         else:
             self.bot.send_message(message.chat.id, "<b>Новини за тиждень:</b>\n\n", parse_mode='HTML')
-            for news in news_list:
+            for news in news_list[::-1]:
                 date = datetime.fromtimestamp(int(news.date)).strftime('%Y-%m-%d %H:%M:%S')
                 message_text = (
                     f"{news.text}\n"
