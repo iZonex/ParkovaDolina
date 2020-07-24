@@ -6,6 +6,8 @@ class ChatsListScreen:
     SECTIONS = [EXIT]
 
     CHATS = {
+        "Чат Строй Сіті Паркова Долина": "https://t.me/parkovayadolina",
+        "Чат Строй Сіті": "https://t.me/stroycity_development",
         "Чат важливі повідомлення": "t.me/parkovadoluna",
         "Чат загальний групи": " t.me/parkovadolyna",
         "Чат Будинка №1 секція №1": "http://t.me/parkovadolyna1",
