@@ -40,9 +40,10 @@ class BuildingScreen:
     }
 
     STATUS_MAP_SMALL = {
-        "1": "✅",
-        "2": "❌",
+        "done": "✅",
+        "waiting": "❌",
         "3": "❗️",
+        "inprogress": "▶️",
     }
 
     def __init__(self, bot, dao):
@@ -53,8 +54,13 @@ class BuildingScreen:
     def _build_sections(self):
         return [types.KeyboardButton(i) for i in self.SECTIONS]
 
-    def generate_states(self, states_list_ids):
-        return "\n".join([f'- {self.STATUS_MAP_SMALL.get("2")} {self.BUILDING_STATUS_MAP.get(i)}' for i in states_list_ids])
+    def generate_states(self, done_states, inprogress_states):
+        states = ["waiting" for i in range(len(self.BUILDING_STATUS_MAP))]
+        for i in done_states:
+            states[i] = "done"
+        for i in inprogress_states:
+            states[i-1] = "inprogress"
+        return "\n".join([f'- {self.STATUS_MAP_SMALL.get(e)} {self.BUILDING_STATUS_MAP.get(str(i))}' for i,e in enumerate(states, start=1)])
 
     def progress_bar(self, progress=4, max_progress=12):
         estimated_line = [" " for _ in range(max_progress)]
@@ -65,14 +71,16 @@ class BuildingScreen:
     def screen(self, message):
         plans = self.dao.building_plan.get()
         for i in plans.values():
-            progress = min([int(i) for i in i.get_expected_state()])
-            progress_percent = round(progress / 12 * 100, 2)
-            text_states = self.generate_states(i.get_expected_state())
+            
+            progress = [int(i) for i in i.get_expected_state()]
+            done_progress = [int(i) for i in range(0, min(progress)-1)]
+            progress_percent = round(min(progress) / 12 * 100, 2)
+            text_states = self.generate_states(done_progress, progress)
             text_body = (
                 f'<strong>🏗{self.BUILDING_NUMBERS.get(i.title, "").upper()}</strong>\n\n'
                 f'<strong>План будівництва на {i.get_date()}:</strong>\n'
                 f"{text_states}\n\n"
-                f'<strong>[{self.progress_bar(progress, 12)}] {progress_percent}% [{progress} з 12]</strong>'
+                f'<strong>[{self.progress_bar(min(progress), 12)}] {progress_percent}% [{min(progress)} з 12]</strong>'
             )
             self.bot.send_message(message.chat.id, text_body, parse_mode='HTML')
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
