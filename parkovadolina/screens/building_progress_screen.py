@@ -63,7 +63,7 @@ class BuildingScreen:
         return "\n".join([f'- {self.STATUS_MAP_SMALL.get(e)} {self.BUILDING_STATUS_MAP.get(str(i))}' for i,e in enumerate(states, start=1)])
 
     def progress_bar(self, progress=4, max_progress=12):
-        estimated_line = [" " for _ in range(max_progress)]
+        estimated_line = ["□" for _ in range(max_progress)]
         for i in range(progress):
             estimated_line[i] = "■"
         return "".join(estimated_line)
@@ -80,7 +80,7 @@ class BuildingScreen:
                 f'<strong>🏗{self.BUILDING_NUMBERS.get(i.title, "").upper()}</strong>\n\n'
                 f'<strong>План будівництва на {i.get_date()}:</strong>\n'
                 f"{text_states}\n\n"
-                f'<strong>[{self.progress_bar(min(progress), 12)}] {progress_percent}% [{min(progress)} з 12]</strong>'
+                f'<strong>|{self.progress_bar(min(progress), 12)}| {progress_percent}% [{min(progress)} з 12]</strong>'
             )
             self.bot.send_message(message.chat.id, text_body, parse_mode='HTML')
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
