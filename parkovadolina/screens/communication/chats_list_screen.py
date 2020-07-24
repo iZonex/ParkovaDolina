@@ -40,7 +40,7 @@ class ChatsListScreen:
         user.get_context()
         bulding_chat = self.CHATS.get(message.text, None)
         if bulding_chat:
-            text_body = f"Посилання на чат {message.text}:\n{bulding_chat}"
+            text_body = f"Посилання на {message.text}:\n{bulding_chat}"
             self.bot.send_message(message.chat.id, text_body)
         else:
             keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
