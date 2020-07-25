@@ -17,7 +17,7 @@ class VoiceChatsScreen:
     def screen(self, message):
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
         keyboard.add(*self.sections)
-        text_body = f"Посилання на голосовий чат:\n{self.FORUM_LINK}"
+        text_body = f"Посилання на голосовий чат:\n{self.LINK}"
         self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard)
 
     @staticmethod
