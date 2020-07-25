@@ -9,6 +9,7 @@ from models.rules import RulesModel
 from models.faq import FAQModel
 from models.ig import IGModel
 from models.users import UsersModel
+from models.session import SessionModel
 from models.persons import PersonsModel
 from models.activitys import ActivitysModel
 from models.checked_group import CheckedGroupModel
@@ -31,6 +32,7 @@ class SpreadSheet:
         self.checked_group = CheckedGroupModel(self._service, sheet_id)
         self.important_news = ImportantNewsModel(self._service, sheet_id)
         self.building_plan = BuildingPlanModel(self._service, sheet_id)
+        self.session = SessionModel()
 
     def _init_service(self):
         creds = None

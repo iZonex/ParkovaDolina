@@ -27,8 +27,12 @@ def main_actions(message):
     else:
         important_news_action(message)
 
+def create_session(message):
+    user_id = message.from_user.id
+    dao.session.create(user_id)
 
 def private_chat(message):
+    create_session(message)
     router.match_pattern(message)
 
 

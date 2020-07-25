@@ -26,15 +26,15 @@ class Router(AbstractRouter):
             return self.default_route.screen(message)
 
     def registration_context(self, route, message):
-        user = self.dao.users.get_by_user_id(message.from_user.id)
-        if user:
+        session = self.dao.session.get_by_user_id(message.from_user.id)
+        if session:
             skip_context = getattr(route, "skip_context", None)
             if skip_context:
                 if not skip_context(message.text):
-                    user.register_context(message.text)
+                    session.register_context(route, message.text)
             else:
-                user.register_context(message.text)
-            user.get_context()
+                session.register_context(route, message.text)
+            session.get_context()
 
     def match_pattern(self, message):
         if self.routing(message):

@@ -36,8 +36,8 @@ class ChatsListScreen:
         return False
 
     def screen(self, message):
-        user = self.dao.users.get_by_user_id(message.from_user.id)
-        user.get_context()
+        session = self.dao.users.get_by_user_id(message.from_user.id)
+        session.get_context()
         bulding_chat = self.CHATS.get(message.text, None)
         if bulding_chat:
             text_body = f"Посилання на {message.text}:\n{bulding_chat}"

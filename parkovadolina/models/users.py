@@ -6,26 +6,6 @@ class User:
         self.uid = uid
         self.user_id = user_id
         self.agreement = agreement
-        self._context = []
-
-    def get_index(self, text):
-        try:
-            return self._context.index(text)
-        except ValueError:
-            return None
-
-    def register_context(self, text):
-        cut_index = self.get_index(text)
-        if text == EXIT or text == "Головне меню":
-            self._context = []
-        elif cut_index != None:
-            self._context = self._context[:cut_index+1]
-        else:
-            self._context.append(text)
-
-    def get_context(self):
-        print(f"User {self.user_id} Context: {' >>> '.join(self._context)}")
-        return self._context
 
     def save(self):
         self.dao.update(self.uid, self.user_id, self.agreement)
