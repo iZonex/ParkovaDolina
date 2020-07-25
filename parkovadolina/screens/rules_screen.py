@@ -17,7 +17,7 @@ class RulesScreen:
         user_id = message.from_user.id
         self.dao.users.create(user_id)
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
-        keyboard.add(types.KeyboardButton(text=EXIT))
+        keyboard.add(types.KeyboardButton(text="Головне меню"))
         self.bot.send_message(message.chat.id, "Дякую за те що прийняли правила", reply_markup=keyboard)
 
     def rules_chats(self, message):
