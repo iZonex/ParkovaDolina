@@ -3,7 +3,7 @@ from core.constants import EXIT
 
 class CommunicationScreen:
 
-    SECTIONS = ["Чати інвесторів", "Форум інвесторів", EXIT]
+    SECTIONS = ["Чати інвесторів", "Голосовий чат", "Форум інвесторів", EXIT]
 
     def __init__(self, bot, dao):
         self.bot = bot
