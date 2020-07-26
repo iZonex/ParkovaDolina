@@ -18,7 +18,7 @@ class Router(AbstractRouter):
         if session and session[-1][0].match_context(message):
             route_screen = await session[-1][0].screen(message)
             return route_screen
-        elif not session and message.text.startswith("Назад"):
+        elif not session and message.text.startswith("↩️Назад"):
             self.registration_context(self.default_route, message)
             default_route_screen = await self.default_route.screen(message)
             return default_route_screen

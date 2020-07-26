@@ -3,9 +3,7 @@ Description=ParkovaDolinaBot
 After=syslog.target network.target
 
 [Service]
-Environment="BOT_KEY=1340390485:AAF5UnF-GgncRT52D9MO6E6EoZ_J_0vnrZk"
-Environment="SPREADSHEET_ID=1pdaG9ePKEtn1bvvghKdyl5cVD4A4S4UyxU8Ibo9e4hI"
-Type=simple
+EnvironmentFile=/etc/parkovadolina.conf
 User=root
 WorkingDirectory=/srv/ParkovaDolina/
 ExecStart=/srv/ParkovaDolina/env/bin/python app.py

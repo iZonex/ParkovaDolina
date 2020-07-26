@@ -17,7 +17,7 @@ class Session:
         cut_index = self.get_index(text)
         if text == EXIT or text == "Головне меню":
             self._context = []
-        elif text == "Назад":
+        elif text == "↩️Назад":
             self._context = self._context[:-1]
         elif cut_index != None:
             self._context = self._context[:cut_index+1]

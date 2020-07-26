@@ -24,7 +24,7 @@ class BuildingMainScreen(Screen):
         await self.bot.send_message(message.chat.id, "Оберить будинок", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     def match_context(self, message):
-        return message.text.startswith("Назад")
+        return message.text.startswith("↩️Назад")
 
     @staticmethod
     def match(message):

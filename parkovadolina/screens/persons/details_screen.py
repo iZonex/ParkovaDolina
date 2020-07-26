@@ -25,7 +25,7 @@ class PersonsDetailScreen(Screen):
             f'<a href="{person.link}">Посилання</a>\n\n'
         )
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-        keyboard.add(types.KeyboardButton(text="Назад"))
+        keyboard.add(types.KeyboardButton(text="↩️Назад"))
         keyboard.add(types.KeyboardButton(text=EXIT))
         await self.bot.send_message(message.chat.id, message_text, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 

@@ -6,7 +6,7 @@ from parkovadolina.core.constants import EXIT
 
 class BuildingProgressScreen(Screen):
 
-    SECTIONS = ["Назад"]
+    SECTIONS = ["↩️Назад"]
 
     BUILDING_STATUS_MAP = {
         "1": "Котлован",
@@ -83,7 +83,7 @@ class BuildingProgressScreen(Screen):
             await self.details(message, i)
         except KeyError:
             keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
-            keyboard.add(types.KeyboardButton("Назад"))
+            keyboard.add(types.KeyboardButton("↩️Назад"))
             await self.bot.send_message(message.chat.id, "Спасибі за ваш внесок", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     def match_context(self, message):
