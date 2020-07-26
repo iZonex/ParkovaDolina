@@ -1,4 +1,5 @@
-from telebot import types
+from aiogram import types
+from aiogram.types.message import ParseMode
 from core.constants import EXIT
 
 class RulesScreen:
@@ -13,27 +14,27 @@ class RulesScreen:
     def _build_sections(self):
         return [types.KeyboardButton(i) for i in self.SECTIONS]
 
-    def rules_confirm(self, message):
+    async def rules_confirm(self, message):
         user_id = message.from_user.id
         self.dao.users.create(user_id)
-        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
+        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
         keyboard.add(types.KeyboardButton(text="Головне меню"))
-        self.bot.send_message(message.chat.id, "Дякую за те що прийняли правила", reply_markup=keyboard)
+        await self.bot.send_message(message.chat.id, "Дякую за те що прийняли правила", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
-    def rules_chats(self, message):
+    async def rules_chats(self, message):
         text_body = "📋 Правила чату:\n\n"
         text_body += "\n\n".join(self.dao.rules.get())
         available_options = ["🤝Згоден з правилами"]
-        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
+        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
         [ keyboard.add(types.KeyboardButton(text=i)) for i in available_options]
         keyboard.add(types.KeyboardButton(text=EXIT))
-        self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard)
+        await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
-    def screen(self, message):
+    async def screen(self, message):
         if message.text.startswith("🤝Згоден з правилами"):
-            self.rules_confirm(message)
+            await self.rules_confirm(message)
         else:
-            self.rules_chats(message)
+            await self.rules_chats(message)
 
     @staticmethod
     def match(message):

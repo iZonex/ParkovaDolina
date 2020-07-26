@@ -1,4 +1,5 @@
-from telebot import types
+from aiogram import types
+from aiogram.types.message import ParseMode
 from core.constants import EXIT
 # get_actual_state_of_month == choiced_state. if less then actual state. Issues with building, If equail Normal, If more great
 
@@ -58,7 +59,7 @@ class BuildingProgressScreen:
             estimated_line[i] = "■"
         return "".join(estimated_line)
 
-    def screen(self, message):
+    async def screen(self, message):
         i = self.dao.building_plan.get_by_building_title(message.text)
         progress = [int(i) for i in i.get_expected_state()]
         done_progress = [int(i) for i in range(0, min(progress)-1)]
@@ -70,9 +71,9 @@ class BuildingProgressScreen:
             f"{text_states}\n\n"
             f'<strong>|{self.progress_bar(min(progress), 12)}| {progress_percent}% [{min(progress)} з 12]</strong>'
         )
-        keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=1)
+        keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
         keyboard.add(*self.sections)
-        self.bot.send_message(message.chat.id, text_body, parse_mode='HTML', reply_markup=keyboard)
+        await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     @staticmethod
     def match(message):

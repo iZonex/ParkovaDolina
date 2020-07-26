@@ -1,4 +1,5 @@
-from telebot import types
+from aiogram import types
+from aiogram.types.message import ParseMode
 from core.constants import EXIT
 
 class CheckedGroupScreen:
@@ -13,11 +14,11 @@ class CheckedGroupScreen:
     def _build_sections(self):
         return [types.KeyboardButton(i) for i in self.SECTIONS]
 
-    def screen(self, message):
+    async def screen(self, message):
         text_body = self.dao.checked_group.get()
-        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
+        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
         keyboard.add(types.KeyboardButton(text=EXIT))
-        self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode='HTML')
+        await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     @staticmethod
     def match(message):

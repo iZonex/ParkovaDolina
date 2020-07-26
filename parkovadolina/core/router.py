@@ -12,18 +12,20 @@ class Router(AbstractRouter):
         self.default_route = self.default_route(bot,dao) if self.default_route else None 
         self.routes = [i(bot,dao) for i in self.routes] if self.routes else []
 
-    def routing(self, message):
+    async def routing(self, message):
         for route in self.routes:
             if isinstance(route, AbstractRouter):
-                if route.match_pattern(message):
+                match_patter = await route.match_pattern(message)
+                if match_patter:
                     return route
             elif route.match(message):
                 self.registration_context(route, message)
-                route.screen(message)
-                return route
+                route_screen = await route.screen(message)
+                return route_screen
         if self.default_route.match(message):
             self.registration_context(self.default_route, message)
-            return self.default_route.screen(message)
+            default_route_screen = await self.default_route.screen(message)
+            return default_route_screen
 
     def registration_context(self, route, message):
         session = self.dao.session.get_by_user_id(message.from_user.id)
@@ -36,7 +38,8 @@ class Router(AbstractRouter):
                 session.register_context(route, message.text)
             session.get_context()
 
-    def match_pattern(self, message):
-        if self.routing(message):
+    async def match_pattern(self, message):
+        route_found = await self.routing(message)
+        if route_found:
             return True
         return False

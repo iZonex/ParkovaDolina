@@ -1,4 +1,5 @@
-from telebot import types
+from aiogram import types
+from aiogram.types.message import ParseMode
 from core.constants import EXIT
 
 class ChatsListScreen:
@@ -35,17 +36,17 @@ class ChatsListScreen:
             return True
         return False
 
-    def screen(self, message):
+    async def screen(self, message):
         bulding_chat = self.CHATS.get(message.text, None)
         if bulding_chat:
             text_body = f"Посилання на {message.text}:\n{bulding_chat}"
-            self.bot.send_message(message.chat.id, text_body)
+            await self.bot.send_message(message.chat.id, text_body, parse_mode=ParseMode.HTML)
         else:
-            keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
+            keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
             for i in self.CHATS.keys():
                 keyboard.add(types.KeyboardButton(text=i))
             keyboard.add(types.KeyboardButton(text=EXIT))
-            self.bot.send_message(message.chat.id, "Оберіть вашу секцію.", reply_markup=keyboard)
+            await self.bot.send_message(message.chat.id, "Оберіть вашу секцію.", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     @staticmethod
     def match(message):

@@ -1,4 +1,4 @@
-from telebot import types
+from aiogram import types
 
 class ImportantNewsAction:
 
@@ -6,6 +6,6 @@ class ImportantNewsAction:
         self.bot = bot
         self.dao = dao
 
-    def action(self, message):
+    async def action(self, message):
         if "#важливо" in message.text:
             self.dao.important_news.create(message.from_user.username, message.text, message.date)

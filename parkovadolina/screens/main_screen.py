@@ -1,5 +1,6 @@
+from aiogram.types.message import ParseMode
 from core.constants import EXIT
-from telebot import types
+from aiogram import types
 
 
 class MainScreen:
@@ -18,19 +19,19 @@ class MainScreen:
     def _build_sections(self):
         return [types.KeyboardButton(i) for i in self.SECTIONS]
 
-    def screen(self, message):
+    async def screen(self, message):
         user = self.dao.users.get_by_user_id(message.from_user.id)
         if user:
-            keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
+            keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
             keyboard.add(*self.sections)
             if message.text == "/start":
-                self.bot.send_message(message.chat.id, self.WELCOME_TEXT, reply_markup=keyboard)
+                await self.bot.send_message(message.chat.id, self.WELCOME_TEXT, reply_markup=keyboard, parse_mode=ParseMode.HTML)
             else:
-                self.bot.send_message(message.chat.id, "Головне меню", reply_markup=keyboard)
+                await self.bot.send_message(message.chat.id, "Головне меню", reply_markup=keyboard, parse_mode=ParseMode.HTML)
         else:
-            keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
+            keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
             keyboard.add(types.KeyboardButton(text="📋Правила"))
-            self.bot.send_message(message.chat.id, f"{self.WELCOME_TEXT}\n\n{self.RULES_NOTICE}", reply_markup=keyboard)
+            await self.bot.send_message(message.chat.id, f"{self.WELCOME_TEXT}\n\n{self.RULES_NOTICE}", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     @staticmethod
     def match(message):

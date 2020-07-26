@@ -1,4 +1,5 @@
-from telebot import types
+from aiogram import types
+from aiogram.types.message import ParseMode
 from core.constants import EXIT
 
 class ActivitysScreen:
@@ -13,13 +14,13 @@ class ActivitysScreen:
     def _build_sections(self):
         return [types.KeyboardButton(i) for i in self.SECTIONS]
 
-    def screen(self, message):
+    async def screen(self, message):
         activitys = self.dao.activity.get()
-        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=1)
+        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
         keyboard.add(types.KeyboardButton(text=EXIT))
         if not activitys:
             text_body = "Немає активності"
-            self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard,)
+            await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode=ParseMode.HTML)
         for i in activitys:
             text_body = (
                 f'<strong>{i.title.upper()}</strong>\n'
@@ -27,7 +28,7 @@ class ActivitysScreen:
                 f"{i.actions_description} \n\n"
                 f'<a href="{i.source_link}">Посилання</a>'
             )
-            self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode='HTML')
+            await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     @staticmethod
     def match(message):

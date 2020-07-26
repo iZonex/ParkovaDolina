@@ -10,7 +10,7 @@ class IGModel:
     def load_data(self):
         result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute()
         values = result.get('values', [])
-        return [" ".join(row) for row in values]
+        return [" ".join(row) for row in values][0]
 
     def get(self):
         return self._data
