@@ -1,11 +1,12 @@
+from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from core.constants import EXIT
+from parkovadolina.core.constants import EXIT
 # get_actual_state_of_month == choiced_state. if less then actual state. Issues with building, If equail Normal, If more great
 
-class BuildingProgressScreen:
+class BuildingProgressScreen(Screen):
 
-    SECTIONS = ["🏗Будівництво", EXIT]
+    SECTIONS = ["Назад"]
 
     BUILDING_STATUS_MAP = {
         "1": "Котлован",
@@ -25,9 +26,9 @@ class BuildingProgressScreen:
     PREFIX = "Йде етап будівництва: "
 
     STATUS_MAP = {
-        "1": "✅Будуватися за планом",
-        "2": "❌Будівництво зупинено",
-        "3": "❗️Будівництво призупинене"
+        "1": "✅Все добре",
+        "2": "❌Зупинено",
+        "3": "❗️Помічені проблеми"
     }
 
     STATUS_MAP_SMALL = {
@@ -59,8 +60,7 @@ class BuildingProgressScreen:
             estimated_line[i] = "■"
         return "".join(estimated_line)
 
-    async def screen(self, message):
-        i = self.dao.building_plan.get_by_building_title(message.text)
+    async def details(self, message, i):
         progress = [int(i) for i in i.get_expected_state()]
         done_progress = [int(i) for i in range(0, min(progress)-1)]
         progress_percent = round(min(progress) / 12 * 100, 2)
@@ -72,8 +72,22 @@ class BuildingProgressScreen:
             f'<strong>|{self.progress_bar(min(progress), 12)}| {progress_percent}% [{min(progress)} з 12]</strong>'
         )
         keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
+        keyboard.row(*[types.KeyboardButton(i) for i in self.STATUS_MAP.values()])
         keyboard.add(*self.sections)
         await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+
+    async def screen(self, message):
+        ctx = self.dao.session.get(message.from_user.id).get_context()
+        try:
+            i = self.dao.building_plan.get_by_building_title(message.text)
+            await self.details(message, i)
+        except KeyError:
+            keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
+            keyboard.add(types.KeyboardButton("Назад"))
+            await self.bot.send_message(message.chat.id, "Спасибі за ваш внесок", reply_markup=keyboard, parse_mode=ParseMode.HTML)
+
+    def match_context(self, message):
+        return message.text in [i for i in self.STATUS_MAP.values()]
 
     @staticmethod
     def match(message):

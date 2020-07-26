@@ -1,8 +1,9 @@
+from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from core.constants import EXIT
+from parkovadolina.core.constants import EXIT
 
-class ForumScreen:
+class ForumScreen(Screen):
 
     SECTIONS = [EXIT]
     FORUM_LINK = "https://parkova-dolyna.com/"

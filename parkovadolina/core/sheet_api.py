@@ -1,20 +1,21 @@
 import pickle
 import socket
+import os
 import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
-from models.rules import RulesModel
-from models.faq import FAQModel
-from models.ig import IGModel
-from models.users import UsersModel
-from models.session import SessionModel
-from models.persons import PersonsModel
-from models.activitys import ActivitysModel
-from models.checked_group import CheckedGroupModel
-from models.important_news import ImportantNewsModel
-from models.building_plan import BuildingPlanModel
+from parkovadolina.models.rules import RulesModel
+from parkovadolina.models.faq import FAQModel
+from parkovadolina.models.ig import IGModel
+from parkovadolina.models.users import UsersModel
+from parkovadolina.models.session import SessionModel
+from parkovadolina.models.persons import PersonsModel
+from parkovadolina.models.activitys import ActivitysModel
+from parkovadolina.models.checked_group import CheckedGroupModel
+from parkovadolina.models.important_news import ImportantNewsModel
+from parkovadolina.models.building_plan import BuildingPlanModel
 
 class SpreadSheet:
 
@@ -53,5 +54,5 @@ class SpreadSheet:
         return service.spreadsheets()
 
 
-SPREADSHEET_ID = '1pdaG9ePKEtn1bvvghKdyl5cVD4A4S4UyxU8Ibo9e4hI'
+SPREADSHEET_ID = os.getenv("SPREADSHEET_ID", "1YcefukFGx7XKvT7oONpnn1nqDGpJUsP3CQdNCL8jt5w")
 dao = SpreadSheet(SPREADSHEET_ID)

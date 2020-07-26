@@ -1,4 +1,4 @@
-from core.router import Router
+from parkovadolina.core.router import Router
 from .main_screen import PersonsScreen
 from .details_screen import PersonsDetailScreen
 

@@ -1,9 +1,10 @@
+from parkovadolina.core.screen import Screen
 from aiogram.types.message import ParseMode
-from core.constants import EXIT
+from parkovadolina.core.constants import EXIT
 from aiogram import types
 
 
-class MainScreen:
+class MainScreen(Screen):
 
     WELCOME_TEXT = "Вітання! Я буду тобі допомагати протягом усього спілкування в групі інвесторів ЖК Паркова Долина"
     RULES_NOTICE = "Прошу ознайомитися з правилами. Натисніть знизу кнопку 📋Правила для продовження"

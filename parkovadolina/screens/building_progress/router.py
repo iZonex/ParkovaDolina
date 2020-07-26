@@ -1,4 +1,4 @@
-from core.router import Router
+from parkovadolina.core.router import Router
 from .building_progress_screen import BuildingProgressScreen
 from .main_screen import BuildingMainScreen
 

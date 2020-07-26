@@ -1,9 +1,10 @@
+from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types import ParseMode
 from datetime import datetime
-from core.constants import EXIT
+from parkovadolina.core.constants import EXIT
 
-class ImportantNewsScreen:
+class ImportantNewsScreen(Screen):
 
     def __init__(self, bot, dao):
         self.bot = bot

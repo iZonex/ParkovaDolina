@@ -1,8 +1,9 @@
+from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from core.constants import EXIT
+from parkovadolina.core.constants import EXIT
 
-class PersonsDetailScreen:
+class PersonsDetailScreen(Screen):
 
     SECTIONS = [EXIT]
 
@@ -24,7 +25,7 @@ class PersonsDetailScreen:
             f'<a href="{person.link}">Посилання</a>\n\n'
         )
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-        keyboard.add(types.KeyboardButton(text="🧩Персони"))
+        keyboard.add(types.KeyboardButton(text="Назад"))
         keyboard.add(types.KeyboardButton(text=EXIT))
         await self.bot.send_message(message.chat.id, message_text, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 

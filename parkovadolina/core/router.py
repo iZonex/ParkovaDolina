@@ -13,30 +13,38 @@ class Router(AbstractRouter):
         self.routes = [i(bot,dao) for i in self.routes] if self.routes else []
 
     async def routing(self, message):
-        for route in self.routes:
-            if isinstance(route, AbstractRouter):
-                match_patter = await route.match_pattern(message)
-                if match_patter:
-                    return route
-            elif route.match(message):
-                self.registration_context(route, message)
-                route_screen = await route.screen(message)
-                return route_screen
-        if self.default_route.match(message):
+        self.registration_context(None, message)
+        session = self.dao.session.get(message.from_user.id).get_context()
+        if session and session[-1][0].match_context(message):
+            route_screen = await session[-1][0].screen(message)
+            return route_screen
+        elif not session and message.text.startswith("Назад"):
             self.registration_context(self.default_route, message)
             default_route_screen = await self.default_route.screen(message)
             return default_route_screen
+        else:
+            for route in self.routes:
+                if isinstance(route, AbstractRouter):
+                    match_patter = await route.match_pattern(message)
+                    if match_patter:
+                        return route
+                elif route.match(message):
+                    self.registration_context(route, message)
+                    route_screen = await route.screen(message)
+                    return route_screen
+            if self.default_route.match(message):
+                self.registration_context(self.default_route, message)
+                default_route_screen = await self.default_route.screen(message)
+                return default_route_screen
 
     def registration_context(self, route, message):
-        session = self.dao.session.get_by_user_id(message.from_user.id)
-        if session:
-            skip_context = getattr(route, "skip_context", None)
-            if skip_context:
-                if not skip_context(message.text):
-                    session.register_context(route, message.text)
-            else:
+        session = self.dao.session.get(message.from_user.id)
+        skip_context = getattr(route, "skip_context", None)
+        if skip_context:
+            if not skip_context(message.text):
                 session.register_context(route, message.text)
-            session.get_context()
+        else:
+            session.register_context(route, message.text)
 
     async def match_pattern(self, message):
         route_found = await self.routing(message)

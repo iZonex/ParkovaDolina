@@ -1,9 +1,10 @@
+from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from core.constants import EXIT
+from parkovadolina.core.constants import EXIT
 # get_actual_state_of_month == choiced_state. if less then actual state. Issues with building, If equail Normal, If more great
 
-class BuildingScreen:
+class BuildingScreen(Screen):
 
     SECTIONS = [EXIT]
 

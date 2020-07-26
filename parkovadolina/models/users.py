@@ -1,4 +1,4 @@
-from core.constants import EXIT
+from parkovadolina.core.constants import EXIT
 class User:
 
     def __init__(self, dao, uid, user_id, agreement):

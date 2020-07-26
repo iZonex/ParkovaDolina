@@ -1,9 +1,10 @@
+from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from core.constants import EXIT
+from parkovadolina.core.constants import EXIT
 # get_actual_state_of_month == choiced_state. if less then actual state. Issues with building, If equail Normal, If more great
 
-class BuildingMainScreen:
+class BuildingMainScreen(Screen):
 
     SECTIONS = [EXIT]
 
@@ -21,6 +22,9 @@ class BuildingMainScreen:
         keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
         keyboard.add(*self.sections)
         await self.bot.send_message(message.chat.id, "Оберить будинок", reply_markup=keyboard, parse_mode=ParseMode.HTML)
+
+    def match_context(self, message):
+        return message.text.startswith("Назад")
 
     @staticmethod
     def match(message):

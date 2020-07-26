@@ -1,8 +1,9 @@
+from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from core.constants import EXIT
+from parkovadolina.core.constants import EXIT
 
-class PersonsScreen:
+class PersonsScreen(Screen):
 
     SECTIONS = [EXIT]
 
@@ -21,6 +22,9 @@ class PersonsScreen:
             keyboard.add(types.KeyboardButton(text=f"Персона, {i.full_name}"))
         keyboard.add(types.KeyboardButton(text=EXIT))
         await self.bot.send_message(message.chat.id, "Оберить персону.", reply_markup=keyboard, parse_mode=ParseMode.HTML)
+
+    def match_context(self, message):
+        return message.text.startswith("Назад")
 
     @staticmethod
     def match(message):

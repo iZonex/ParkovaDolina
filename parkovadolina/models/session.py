@@ -1,4 +1,4 @@
-from core.constants import EXIT
+from parkovadolina.core.constants import EXIT
 
 class Session:
 
@@ -13,17 +13,18 @@ class Session:
                 return n
         return None
 
-    def register_context(self, route, text):
+    def register_context(self, route=None, text=None):
         cut_index = self.get_index(text)
         if text == EXIT or text == "Головне меню":
             self._context = []
+        elif text == "Назад":
+            self._context = self._context[:-1]
         elif cut_index != None:
             self._context = self._context[:cut_index+1]
-        else:
+        elif route != None:
             self._context.append((route, text))
 
     def get_context(self):
-        # print(f"User {self.user_id} Context: {' >>> '.join(self._context)}")
         return self._context
         
 class SessionModel:
@@ -31,9 +32,9 @@ class SessionModel:
     def __init__(self):
         self._data = {}
 
-    def get_by_user_id(self, user_id):
-        return self._data.get(user_id, None)
+    def get(self, user_id):
+        return self._data[user_id]
         
     def create(self, user_id):
-        if not self.get_by_user_id(user_id):
-            self._data[user_id] = Session(self, int(user_id))
+        if not self._data.get(user_id):
+            self._data[user_id] = Session(self, user_id)

@@ -1,4 +1,4 @@
-from core.router import Router
+from parkovadolina.core.router import Router
 from .important_news_screen import ImportantNewsScreen
 from .main_screen import MainScreen
 from .checked_group_screen import CheckedGroupScreen
