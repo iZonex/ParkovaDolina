@@ -21,7 +21,7 @@ class PersonsScreen(Screen):
         for i in persons:
             keyboard.add(types.KeyboardButton(text=f"Персона, {i.full_name}"))
         keyboard.add(types.KeyboardButton(text=EXIT))
-        await self.bot.send_message(message.chat.id, "Оберить персону.", reply_markup=keyboard, parse_mode=ParseMode.HTML)
+        await self.bot.send_message(message.chat.id, "Оберіть персону.", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     def match_context(self, message):
         return message.text.startswith("↩️Назад")

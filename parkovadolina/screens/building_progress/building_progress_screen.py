@@ -82,6 +82,11 @@ class BuildingProgressScreen(Screen):
             i = self.dao.building_plan.get_by_building_title(message.text)
             await self.details(message, i)
         except KeyError:
+            building_name = ctx[-1][-1]
+            building_stats = message.text
+            user_id = message.from_user.id
+            self.dao.building_status.create(building_name, building_stats, user_id)
+            # print(f"{building_name}, {building_stats}, {user_id}")
             keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
             keyboard.add(types.KeyboardButton("↩️Назад"))
             await self.bot.send_message(message.chat.id, "Спасибі за ваш внесок", reply_markup=keyboard, parse_mode=ParseMode.HTML)

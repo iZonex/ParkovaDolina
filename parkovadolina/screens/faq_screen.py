@@ -30,7 +30,7 @@ class FAQScreen(Screen):
         for i in faqs:
             keyboard.add(types.KeyboardButton(text=f"Запитання, {i.question}"))
         keyboard.add(types.KeyboardButton(text=EXIT))
-        await self.bot.send_message(message.chat.id, "Оберить зпитання.", reply_markup=keyboard, parse_mode=ParseMode.HTML)
+        await self.bot.send_message(message.chat.id, "Оберіть зпитання.", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     async def screen(self, message):
         if message.text.startswith("Запитання,"):

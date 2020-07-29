@@ -21,7 +21,7 @@ class BuildingMainScreen(Screen):
     async def screen(self, message):
         keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
         keyboard.add(*self.sections)
-        await self.bot.send_message(message.chat.id, "Оберить будинок", reply_markup=keyboard, parse_mode=ParseMode.HTML)
+        await self.bot.send_message(message.chat.id, "Оберіть будинок", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     def match_context(self, message):
         return message.text.startswith("↩️Назад")

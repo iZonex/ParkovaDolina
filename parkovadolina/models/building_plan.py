@@ -1,4 +1,5 @@
 import datetime
+from dateutil.relativedelta import relativedelta
 
 class BuildingPlan:
 
@@ -36,14 +37,24 @@ class BuildingPlanModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
+        self._map_dates = self._date_map(datetime.datetime(month=5, day=1, year=2020))
         self._data = self.load_data()
+       
+    def _date_map(self, start_date):
+        data = {}
+        for i in range(30):
+            date = start_date + relativedelta(months=i)
+            date.date()
+            data[str(i)] = date.date()
+        return data
+        
 
     def load_data(self):
         data = {}
         rows = self._service.values().get(spreadsheetId=self._sheet,
                                             range=self.RANGE_ID).execute().get('values', [])
 
-        header = [datetime.datetime.strptime(i, '%d.%m.%Y').date() for i in rows[0][1:]]
+        header = [self._map_dates[i] for i in rows[0][1:]]
 
         for row in rows[1:]:
             states = {}
@@ -51,7 +62,6 @@ class BuildingPlanModel:
                 states[header[number]] = states_raw_string.split(",")
             obj = BuildingPlan(self, row[0], states)
             data[obj.title] = obj
-
         return data
 
     def get(self):
