@@ -20,7 +20,8 @@ class BuildingPlan:
         self.states = states
 
     def get_expected_state(self):
-        return self.states.get(datetime.datetime.now().replace(day=1).date())
+        start_of_month = datetime.datetime.now().replace(day=1).date()
+        return self.states.get(start_of_month)
 
     @property
     def title(self):
@@ -37,23 +38,15 @@ class BuildingPlanModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
-        self._map_dates = self._date_map(datetime.datetime(month=5, day=1, year=2020))
+        self._map_dates = self._date_map(datetime.datetime(month=7, day=1, year=2020))
         self._data = self.load_data()
        
     def _date_map(self, start_date):
-        data = {}
-        for i in range(30):
-            date = start_date + relativedelta(months=i)
-            date.date()
-            data[str(i)] = date.date()
-        return data
+        return {str(i):(start_date + relativedelta(months=i)).date() for i in range(30)}
         
-
     def load_data(self):
         data = {}
-        rows = self._service.values().get(spreadsheetId=self._sheet,
-                                            range=self.RANGE_ID).execute().get('values', [])
-
+        rows = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])
         header = [self._map_dates[i] for i in rows[0][1:]]
 
         for row in rows[1:]:

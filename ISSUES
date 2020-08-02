@@ -3,3 +3,6 @@
 3. Long dilay between registration and next actions.
 4. Add cache for dao objects.
 5. Add /start command
+6. Improve registration, menu disappears sometimes.
+7. Add text annoing founction about registration to users without it.
+8. Add flats tracker or user profile, with Building, Section, Flat number.
