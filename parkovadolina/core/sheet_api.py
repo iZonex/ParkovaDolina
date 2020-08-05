@@ -1,3 +1,4 @@
+from parkovadolina.models.registration_remainder import RegistrationRemainderModel
 from parkovadolina.models.building_status import BuildingStatusModel
 import pickle
 import socket
@@ -36,6 +37,7 @@ class SpreadSheet:
         self.building_plan = BuildingPlanModel(self._service, sheet_id)
         self.building_status = BuildingStatusModel(self._service, sheet_id)
         self.session = SessionModel()
+        self.registraion_remained = RegistrationRemainderModel()
 
     def _init_service(self):
         creds = None

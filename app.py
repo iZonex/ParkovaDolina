@@ -1,6 +1,6 @@
 import logging
 import os
-# from parkovadolina.actions.on_ignore_registration import OnMessageWORegistrationAction
+from parkovadolina.actions.on_ignore_registration import OnMessageWORegistrationAction
 from aiogram import Bot, Dispatcher, executor, types
 from parkovadolina.core.sheet_api import dao
 from parkovadolina.screens.router import MainRouter
@@ -17,7 +17,7 @@ dp = Dispatcher(bot)
 important_news_action = ImportantNewsAction(bot, dao)
 router = MainRouter(bot, dao)
 on_join_action = OnJoinGroupAction(bot, dao)
-# on_message_wo_registration = OnMessageWORegistrationAction(bot, dao)
+on_message_wo_registration = OnMessageWORegistrationAction(bot, dao)
 
 
 @dp.message_handler(content_types=['new_chat_members'])
@@ -31,7 +31,7 @@ async def main_actions(message):
     if message.chat.type == "private":
         await private_chat(message)
     else:
-        # await on_message_wo_registration.action(message)
+        await on_message_wo_registration.action(message)
         await important_news_action.action(message)
 
 def create_session(message):
