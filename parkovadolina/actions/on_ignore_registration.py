@@ -4,7 +4,9 @@ from aiogram import types
 class OnMessageWORegistrationAction:
 
     TEXT = (
-        "Перепрошую {username}, але не могли б ви зі мною зв'язатися? {bot_name}\n"
+        "Перепрошую {username}, але не могли б ви зі мною зв’язатися? {bot_name} "
+        "Я помітив що ви долучилися в группу - та не прочитали мене. В мені зібрана "
+        "вся головна інформація і я б з радістю поділився би нею."
     )
 
     BOT_NAME = "@ParkValleyBot"
