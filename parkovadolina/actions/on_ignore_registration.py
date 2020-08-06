@@ -1,12 +1,11 @@
 import time
-from aiogram import types
+from aiogram.types.message import ParseMode
 
 class OnMessageWORegistrationAction:
 
     TEXT = (
-        "Перепрошую {username}, але не могли б ви зі мною зв’язатися? {bot_name} "
-        "Я помітив що ви долучилися в группу - та не прочитали мене. В мені зібрана "
-        "вся головна інформація і я б з радістю поділився би нею."
+        "Перепрошую, <b>{username}!</b> Я помітив що ви долучилися в группу - та не прочитали мое повідомлення, зв'яжіться будь ласка зі мною {bot_name} "
+        "так як у мене для вас зібрана вся головна інформація і я б з радістю поділився би нею."
     )
 
     BOT_NAME = "@ParkValleyBot"
@@ -35,5 +34,5 @@ class OnMessageWORegistrationAction:
                     username=username,
                     bot_name=self.BOT_NAME
                 )
-                await message.reply(text_body)
+                await message.reply(text_body, parse_mode=ParseMode.HTML)
                 self.dao.registraion_remained.add(member.id)
