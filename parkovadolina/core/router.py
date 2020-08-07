@@ -37,6 +37,19 @@ class Router(AbstractRouter):
                 default_route_screen = await self.default_route.screen(message)
                 return default_route_screen
 
+    async def in_line_routing(self, query):
+        for route in self.routes:
+            if isinstance(route, AbstractRouter):
+                match_patter = await route.in_line_match_pattern(query)
+                if match_patter:
+                    return route
+            elif route.in_line_match_pattern(query):
+                route_in_line = await route.in_line(query)
+                return route_in_line
+        if self.default_route.in_line_match_pattern(query):
+            default_in_line = await self.default_route.in_line(query)
+            return default_in_line
+
     def registration_context(self, route, message):
         session = self.dao.session.get(message.from_user.id)
         skip_context = getattr(route, "skip_context", None)
@@ -51,3 +64,11 @@ class Router(AbstractRouter):
         if route_found:
             return True
         return False
+
+    async def in_line_match_pattern(self, query):
+        route_found = await self.in_line_routing(query)
+        if route_found:
+            return True
+        return False
+
+        

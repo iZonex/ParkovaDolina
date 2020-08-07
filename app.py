@@ -19,6 +19,9 @@ router = MainRouter(bot, dao)
 on_join_action = OnJoinGroupAction(bot, dao)
 on_message_wo_registration = OnMessageWORegistrationAction(bot, dao)
 
+@dp.callback_query_handler() 
+async def inline_kb_answer_callback_handler(query: types.CallbackQuery):
+    await router.in_line_match_pattern(query)
 
 @dp.message_handler(content_types=['new_chat_members'])
 async def on_user_joins(message):
@@ -43,4 +46,4 @@ async def private_chat(message):
 
 
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=False)
+    executor.start_polling(dp, skip_updates=True)

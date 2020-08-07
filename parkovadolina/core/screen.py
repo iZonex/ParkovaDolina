@@ -6,3 +6,7 @@ class Screen:
     @staticmethod
     def match(message):
         return False
+
+    @staticmethod
+    def in_line_match_pattern(query):
+        return False
