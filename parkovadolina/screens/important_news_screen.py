@@ -49,7 +49,7 @@ class ImportantNewsScreen(Screen):
             keyboard_markup = types.InlineKeyboardMarkup(row_width=2)
 
             text_and_data = (
-                ('Наступня >>', 'news_next_1'),
+                ('Наступна >>', 'news_next_1'),
                 
             )
 
