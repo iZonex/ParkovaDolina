@@ -1,8 +1,6 @@
 from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from parkovadolina.core.constants import EXIT
-# get_actual_state_of_month == choiced_state. if less then actual state. Issues with building, If equail Normal, If more great
 
 class BuildingProgressScreen(Screen):
 
@@ -120,13 +118,16 @@ class BuildingProgressScreen(Screen):
                 types.InlineKeyboardButton(f'{next_date} >>', callback_data=f'building_{building.title_id}_{next_date}')
             )
         keyboard_markup.row(*row_btns)
-        await self.bot.edit_message_text(
-            text_body, 
-            chat_id=query.message.chat.id, 
-            message_id=query.message.message_id, 
-            reply_markup=keyboard_markup, 
-            parse_mode=ParseMode.HTML
-        )
+        try:
+            await self.bot.edit_message_text(
+                text_body, 
+                chat_id=query.message.chat.id, 
+                message_id=query.message.message_id, 
+                reply_markup=keyboard_markup, 
+                parse_mode=ParseMode.HTML
+            )
+        except Exception as e:
+            print(e)
 
     async def screen(self, message):
         ctx = self.dao.session.get(message.from_user.id).get_context()
