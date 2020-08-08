@@ -23,7 +23,7 @@ class ImportantNewsScreen(Screen):
             row_btns.append(
                 types.InlineKeyboardButton('<< Попередня', callback_data=f'news_prev_{page_index-1}')
             )
-        if page_index + 1 <= len(news_list):
+        if page_index + 1 < len(news_list):
             row_btns.append(
                 types.InlineKeyboardButton('Наступна >>', callback_data=f'news_next_{page_index+1}')
             )

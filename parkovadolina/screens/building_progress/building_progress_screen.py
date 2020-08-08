@@ -59,34 +59,85 @@ class BuildingProgressScreen(Screen):
         for i in range(progress):
             estimated_line[i] = "■"
         return "".join(estimated_line)
-
-    async def details(self, message, i):
-        progress = [int(i) for i in i.get_expected_state()]
-        done_progress = [int(i) for i in range(0, min(progress)-1)]
-        progress_percent = round(min(progress) / 12 * 100, 2)
-        text_states = self.generate_states(done_progress, progress)
-        text_body = (
-            f'<strong>🏗{i.title.upper()}</strong>\n\n'
-            f'<strong>План будівництва на {i.get_date()}:</strong>\n'
-            f"{text_states}\n\n"
-            f'<strong>|{self.progress_bar(min(progress), 12)}| {progress_percent}% [{min(progress)} з 12]</strong>'
-        )
+    
+    async def details_header(self, message, building):
+        text_body = f'<strong>🏗{building.title.upper()}</strong>'
         keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
         keyboard.row(*[types.KeyboardButton(i) for i in self.STATUS_MAP.values()])
         keyboard.add(*self.sections)
         await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
+    async def details(self, message, building):
+        await self.details_header(message, building)
+        progress = [int(i) for i in building.get_expected_state()]
+        done_progress = [int(i) for i in range(0, min(progress)-1)]
+        progress_percent = round(min(progress) / 12 * 100, 2)
+        text_states = self.generate_states(done_progress, progress)
+        current_date = building.get_date()
+        next_date = building.get_next_date_by_date(current_date)
+        prev_date = building.get_prev_date_by_date(current_date)
+        text_body = (
+            f'<strong>План будівництва на {building.get_date()}:</strong>\n'
+            f"{text_states}\n\n"
+            f'<strong>|{self.progress_bar(min(progress), 12)}| {progress_percent}% [{min(progress)} з 12]</strong>'
+        )
+        keyboard_markup = types.InlineKeyboardMarkup(row_width=2)
+        row_btns = []
+        if prev_date:
+            row_btns.append(
+                types.InlineKeyboardButton(f'<< {prev_date}', callback_data=f'building_{building.title_id}_{prev_date}')
+            )
+        if next_date:
+            row_btns.append(
+                types.InlineKeyboardButton(f'{next_date} >>', callback_data=f'building_{building.title_id}_{next_date}')
+            )
+        keyboard_markup.row(*row_btns)
+        await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard_markup, parse_mode=ParseMode.HTML)
+
+    async def in_line(self, query):
+        _, title_id, current_date = query.data.split("_")
+        building = self.dao.building_plan.get_by_title_id(title_id)
+        states_by_date = building.get_state_by_date(current_date)
+        progress = [int(i) for i in states_by_date]
+        done_progress = [int(i) for i in range(0, min(progress)-1)]
+        progress_percent = round(min(progress) / 12 * 100, 2)
+        text_states = self.generate_states(done_progress, progress)
+        next_date = building.get_next_date_by_date(current_date)
+        prev_date = building.get_prev_date_by_date(current_date)
+        text_body = (
+            f'<strong>План будівництва на {current_date}:</strong>\n'
+            f"{text_states}\n\n"
+            f'<strong>|{self.progress_bar(min(progress), 12)}| {progress_percent}% [{min(progress)} з 12]</strong>'
+        )
+        keyboard_markup = types.InlineKeyboardMarkup(row_width=2)
+        row_btns = []
+        if prev_date:
+            row_btns.append(
+                types.InlineKeyboardButton(f'<< {prev_date}', callback_data=f'building_{building.title_id}_{prev_date}')
+            )
+        if next_date:
+            row_btns.append(
+                types.InlineKeyboardButton(f'{next_date} >>', callback_data=f'building_{building.title_id}_{next_date}')
+            )
+        keyboard_markup.row(*row_btns)
+        await self.bot.edit_message_text(
+            text_body, 
+            chat_id=query.message.chat.id, 
+            message_id=query.message.message_id, 
+            reply_markup=keyboard_markup, 
+            parse_mode=ParseMode.HTML
+        )
+
     async def screen(self, message):
         ctx = self.dao.session.get(message.from_user.id).get_context()
         try:
-            i = self.dao.building_plan.get_by_building_title(message.text)
-            await self.details(message, i)
+            building = self.dao.building_plan.get_by_building_title(message.text)
+            await self.details(message, building)
         except KeyError:
             building_name = ctx[-1][-1]
             building_stats = message.text
             user_id = message.from_user.id
             self.dao.building_status.create(building_name, building_stats, user_id)
-            # print(f"{building_name}, {building_stats}, {user_id}")
             keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
             keyboard.add(types.KeyboardButton("↩️Назад"))
             await self.bot.send_message(message.chat.id, "Спасибі за ваш внесок", reply_markup=keyboard, parse_mode=ParseMode.HTML)
@@ -97,3 +148,9 @@ class BuildingProgressScreen(Screen):
     @staticmethod
     def match(message):
         return message.text.lower().startswith("Будинок".lower()) or False
+
+    @staticmethod
+    def in_line_match_pattern(query):
+        if query.data.startswith("building_"):
+            return True
+        return False
