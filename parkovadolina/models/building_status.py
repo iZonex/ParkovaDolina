@@ -1,4 +1,4 @@
-import math
+from collections import Counter
 from parkovadolina.models.building_constants import BUILDING_NUMBERS, BUILDING_NUMBERS_REVERSED, STATUS_MAP_REVERSED
 import time
 from datetime import datetime
@@ -33,7 +33,7 @@ class BuildingStatusModel:
         self._ttl = time.time()
         self.__data = self.load_data()
         self._ttl_building_status = time.time()
-        self._building_status_results = {}
+        self._building_status_results = {i: "1" for i in BUILDING_NUMBERS.keys()}
         
     @property
     def _data(self):
@@ -67,8 +67,8 @@ class BuildingStatusModel:
         if self._ttl_building_status <= time.time():
             start_date = datetime.now().replace(day=1)
             for building_id in self._data.keys():
-                result_status = [int(obj.status) for obj in self._data[building_id] if obj.date >= start_date]
-                self._building_status_results[building_id] = str(int(round(sum(result_status) / len(result_status), 2)))
+                result_status = Counter([obj.status for obj in self._data[building_id] if obj.date >= start_date])
+                self._building_status_results[building_id] = str(result_status.most_common(1)[0][0])
             self._ttl_building_status = time.time() + 86400
         return self._building_status_results
 
