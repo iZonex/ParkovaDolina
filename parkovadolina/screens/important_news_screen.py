@@ -11,7 +11,7 @@ class ImportantNewsScreen(Screen):
         self.dao = dao
 
     async def in_line(self, query):
-        news_list = self.dao.important_news.get()[::-1]
+        news_list = self.dao.important_news.get()
         page_index = int(query.data.split("_")[2])
         try:
             news = news_list[page_index]
@@ -21,11 +21,11 @@ class ImportantNewsScreen(Screen):
         row_btns = []
         if not page_index - 1 < 0:
             row_btns.append(
-                types.InlineKeyboardButton('<< Попередня', callback_data=f'news_prev_{page_index-1}')
+                types.InlineKeyboardButton('◀️ Наступна', callback_data=f'news_prev_{page_index-1}')
             )
         if page_index + 1 < len(news_list):
             row_btns.append(
-                types.InlineKeyboardButton('Наступна >>', callback_data=f'news_next_{page_index+1}')
+                types.InlineKeyboardButton('Попередня ▶️', callback_data=f'news_next_{page_index+1}')
             )
        
         keyboard_markup.row(*row_btns)
@@ -49,13 +49,13 @@ class ImportantNewsScreen(Screen):
             keyboard_markup = types.InlineKeyboardMarkup(row_width=2)
 
             text_and_data = (
-                ('Наступна >>', 'news_next_1'),
+                ('Попередня ▶️', 'news_next_1'),
                 
             )
 
             row_btns = (types.InlineKeyboardButton(text, callback_data=data) for text, data in text_and_data)
             keyboard_markup.row(*row_btns)
-            news = news_list[::-1][0]
+            news = news_list[0]
             date = datetime.fromtimestamp(int(news.date)).strftime('%Y-%m-%d %H:%M:%S')
             message_text = (
                 f"{news.text}\n"

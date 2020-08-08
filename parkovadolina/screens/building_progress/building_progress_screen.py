@@ -77,17 +77,17 @@ class BuildingProgressScreen(Screen):
         text_body = (
             f'<strong>План будівництва на {building.get_date()}:</strong>\n'
             f"{text_states}\n\n"
-            f'<strong>|{self.progress_bar(min(progress), 12)}| {progress_percent}% [{min(progress)} з 12]</strong>'
+            f'<strong>|{self.progress_bar(min(progress), 12)}| {progress_percent}%</strong>'
         )
         keyboard_markup = types.InlineKeyboardMarkup(row_width=2)
         row_btns = []
         if prev_date:
             row_btns.append(
-                types.InlineKeyboardButton(f'<< {prev_date}', callback_data=f'building_{building.title_id}_{prev_date}')
+                types.InlineKeyboardButton(f'◀️ {prev_date}', callback_data=f'building_{building.title_id}_{prev_date}')
             )
         if next_date:
             row_btns.append(
-                types.InlineKeyboardButton(f'{next_date} >>', callback_data=f'building_{building.title_id}_{next_date}')
+                types.InlineKeyboardButton(f'{next_date} ▶️', callback_data=f'building_{building.title_id}_{next_date}')
             )
         keyboard_markup.row(*row_btns)
         await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard_markup, parse_mode=ParseMode.HTML)
@@ -105,17 +105,17 @@ class BuildingProgressScreen(Screen):
         text_body = (
             f'<strong>План будівництва на {current_date}:</strong>\n'
             f"{text_states}\n\n"
-            f'<strong>|{self.progress_bar(min(progress), 12)}| {progress_percent}% [{min(progress)} з 12]</strong>'
+            f'<strong>|{self.progress_bar(min(progress), 12)}| {progress_percent}%</strong>'
         )
         keyboard_markup = types.InlineKeyboardMarkup(row_width=2)
         row_btns = []
         if prev_date:
             row_btns.append(
-                types.InlineKeyboardButton(f'<< {prev_date}', callback_data=f'building_{building.title_id}_{prev_date}')
+                types.InlineKeyboardButton(f'◀️ {prev_date}', callback_data=f'building_{building.title_id}_{prev_date}')
             )
         if next_date:
             row_btns.append(
-                types.InlineKeyboardButton(f'{next_date} >>', callback_data=f'building_{building.title_id}_{next_date}')
+                types.InlineKeyboardButton(f'{next_date} ▶️', callback_data=f'building_{building.title_id}_{next_date}')
             )
         keyboard_markup.row(*row_btns)
         try:
