@@ -24,7 +24,7 @@ class BuildingMainScreen(Screen):
         keyboard.add(*self.sections)
         building_statuses = self.dao.building_status_results.get_building_status()
         result_date = self.dao.building_status_results.get_date()
-        text_result = " \n".join([f"- {BUILDING_NUMBERS[k]}: {STATUS_MAP[v]}" for k,v in building_statuses.items()])
+        text_result = " \n".join([f"- {BUILDING_NUMBERS[k]}:\n {STATUS_MAP[v]}" for k,v in building_statuses.items()])
         text_template = (
             f"<strong>На {result_date} статус будівництва:</strong> \n\n"
             f"{text_result}"
