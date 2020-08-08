@@ -1,3 +1,4 @@
+from parkovadolina.models.building_constants import BUILDING_NUMBERS, STATUS_MAP
 from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
@@ -21,7 +22,14 @@ class BuildingMainScreen(Screen):
     async def screen(self, message):
         keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
         keyboard.add(*self.sections)
-        await self.bot.send_message(message.chat.id, "Оберіть будинок", reply_markup=keyboard, parse_mode=ParseMode.HTML)
+        building_statuses = self.dao.building_status_results.get_building_status()
+        result_date = self.dao.building_status_results.get_date()
+        text_result = " \n".join([f"- {BUILDING_NUMBERS[k]}: {STATUS_MAP[v]}" for k,v in building_statuses.items()])
+        text_template = (
+            f"<strong>На {result_date} статус будівництва:</strong> \n\n"
+            f"{text_result}"
+        )
+        await self.bot.send_message(message.chat.id, text_template, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     def match_context(self, message):
         return message.text.startswith("↩️Назад")

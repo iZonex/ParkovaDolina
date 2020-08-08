@@ -1,3 +1,4 @@
+import math
 from parkovadolina.models.building_constants import BUILDING_NUMBERS, BUILDING_NUMBERS_REVERSED, STATUS_MAP_REVERSED
 import time
 from datetime import datetime
@@ -29,9 +30,20 @@ class BuildingStatusModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
-        self._data = self.load_data()
+        self._ttl = time.time()
+        self.__data = self.load_data()
+        self._ttl_building_status = time.time()
+        self._building_status_results = {}
+        
+    @property
+    def _data(self):
+        if time.time() <= self._ttl:
+            self.__data = self.load_data()
+        return self.__data
+
 
     def load_data(self):
+        self._ttl = time.time() + 86400 
         data = {}
         result = self._service.values().get(spreadsheetId=self._sheet,
                                             range=self.RANGE_ID).execute().get('values', [])
@@ -45,8 +57,20 @@ class BuildingStatusModel:
     def get(self):
         return self._data
 
+    def get_date(self):
+        return datetime.now().strftime("%d.%m.%Y")
+
     def get_by_building(self, name):
         return self._data[name]
+
+    def get_building_status(self):
+        if self._ttl_building_status <= time.time():
+            start_date = datetime.now().replace(day=1)
+            for building_id in self._data.keys():
+                result_status = [int(obj.status) for obj in self._data[building_id] if obj.date >= start_date]
+                self._building_status_results[building_id] = str(int(round(sum(result_status) / len(result_status), 2)))
+            self._ttl_building_status = time.time() + 86400
+        return self._building_status_results
 
     def create(self, building_name,	status,	user_id):
         building_id = BUILDING_NUMBERS_REVERSED[building_name]

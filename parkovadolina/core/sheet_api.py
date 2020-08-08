@@ -35,7 +35,7 @@ class SpreadSheet:
         self.checked_group = CheckedGroupModel(self._service, sheet_id)
         self.important_news = ImportantNewsModel(self._service, sheet_id)
         self.building_plan = BuildingPlanModel(self._service, sheet_id)
-        self.building_status = BuildingStatusModel(self._service, sheet_id)
+        self.building_status_results = BuildingStatusModel(self._service, sheet_id)
         self.session = SessionModel()
         self.registraion_remained = RegistrationRemainderModel()
 

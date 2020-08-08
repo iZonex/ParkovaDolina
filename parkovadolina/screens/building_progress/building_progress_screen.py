@@ -1,3 +1,4 @@
+from parkovadolina.screens.building_progress.constants import BUILDING_STATUS_MAP, STATUS_MAP, STATUS_MAP_SMALL
 from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
@@ -5,36 +6,6 @@ from aiogram.types.message import ParseMode
 class BuildingProgressScreen(Screen):
 
     SECTIONS = ["↩️Назад"]
-
-    BUILDING_STATUS_MAP = {
-        "1": "Котлован",
-        "2": "Палі",
-        "3": "Фундамент",
-        "4": "Монолітний залізобетнний каркас",
-        "5": "Стіни, перегородки, покрівля",
-        "6": "Внутрішнє оздоблення",
-        "7": "Вікна, двері, ліфти",
-        "8": "Фасад",
-        "9": "Внутрішні інженері мережі",
-        "10": "Благоустрій",
-        "11": "Зовнішні інженерні мережі",
-        "12": "Будивництво завершенно"
-    }
-
-    PREFIX = "Йде етап будівництва: "
-
-    STATUS_MAP = {
-        "1": "✅Все добре",
-        "2": "❌Зупинено",
-        "3": "❗️Помічені проблеми"
-    }
-
-    STATUS_MAP_SMALL = {
-        "done": "✅",
-        "waiting": "❌",
-        "3": "❗️",
-        "inprogress": "▶️",
-    }
 
     def __init__(self, bot, dao):
         self.bot = bot
@@ -45,12 +16,12 @@ class BuildingProgressScreen(Screen):
         return [types.KeyboardButton(i) for i in self.SECTIONS]
 
     def generate_states(self, done_states, inprogress_states):
-        states = ["waiting" for i in range(len(self.BUILDING_STATUS_MAP))]
+        states = ["waiting" for i in range(len(BUILDING_STATUS_MAP))]
         for i in done_states:
             states[i] = "done"
         for i in inprogress_states:
             states[i-1] = "inprogress"
-        return "\n".join([f'- {self.STATUS_MAP_SMALL.get(e)} {self.BUILDING_STATUS_MAP.get(str(i))}' for i,e in enumerate(states, start=1)])
+        return "\n".join([f'- {STATUS_MAP_SMALL.get(e)} {BUILDING_STATUS_MAP.get(str(i))}' for i,e in enumerate(states, start=1)])
 
     def progress_bar(self, progress=4, max_progress=12):
         estimated_line = ["□" for _ in range(max_progress)]
@@ -61,7 +32,7 @@ class BuildingProgressScreen(Screen):
     async def details_header(self, message, building):
         text_body = f'<strong>🏗{building.title.upper()}</strong>'
         keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
-        keyboard.row(*[types.KeyboardButton(i) for i in self.STATUS_MAP.values()])
+        keyboard.row(*[types.KeyboardButton(i) for i in STATUS_MAP.values()])
         keyboard.add(*self.sections)
         await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
@@ -144,7 +115,7 @@ class BuildingProgressScreen(Screen):
             await self.bot.send_message(message.chat.id, "Спасибі за ваш внесок", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     def match_context(self, message):
-        return message.text in [i for i in self.STATUS_MAP.values()]
+        return message.text in [i for i in STATUS_MAP.values()]
 
     @staticmethod
     def match(message):
