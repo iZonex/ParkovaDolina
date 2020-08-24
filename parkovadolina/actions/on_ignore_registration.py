@@ -18,10 +18,7 @@ class OnMessageWORegistrationAction:
     def send_again_check(self, now_time, user_id):
         last_notification = self.dao.registraion_remained.get(user_id)
         if last_notification:
-            if now_time - self.dao.registraion_remained.get(user_id) >= self.time_delay:
-                return True
-            else:
-                return False
+            return now_time - last_notification >= self.time_delay
         return True
 
     async def action(self, message):

@@ -27,9 +27,10 @@ class BuildingStatusModel:
 
     RANGE_ID = 'Аудит Будівництва!A2:E'
 
-    def __init__(self, service, sheet):
+    def __init__(self, service, sheet, cache_ttl):
         self._service = service
         self._sheet = sheet
+        self._cache_ttl = cache_ttl
         self._ttl = time.time()
         self.__data = {}
         self._ttl_building_status = time.time()
@@ -38,7 +39,7 @@ class BuildingStatusModel:
     @property
     def _data(self):
         if time.time() >= self._ttl:
-            self._ttl = time.time() + 86400 
+            self._ttl = time.time() + self._cache_ttl
             self.__data = self.load_data()
         return self.__data
 

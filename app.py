@@ -2,15 +2,19 @@ import logging
 import os
 from parkovadolina.actions.on_ignore_registration import OnMessageWORegistrationAction
 from aiogram import Bot, Dispatcher, executor, types
-from parkovadolina.core.sheet_api import dao
 from parkovadolina.screens.router import MainRouter
 from parkovadolina.actions.important_news_action import ImportantNewsAction
 from parkovadolina.actions.on_join_group_action import OnJoinGroupAction
+from parkovadolina.core.dao import DAOStorage
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-API_TOKEN = os.getenv("BOT_KEY", "1300282330:AAH36oyCMrLwcB5te9G56KQS9-eq2Xt9Dzg")
 
+STORAGE_CACHE_TTL = int(os.getenv("STORAGE_CACHE_TTL", 30))
+API_TOKEN = os.getenv("BOT_KEY", "1300282330:AAH36oyCMrLwcB5te9G56KQS9-eq2Xt9Dzg")
+SPREADSHEET_ID = os.getenv("SPREADSHEET_ID", "1YcefukFGx7XKvT7oONpnn1nqDGpJUsP3CQdNCL8jt5w")
+
+dao = DAOStorage(SPREADSHEET_ID, STORAGE_CACHE_TTL)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 

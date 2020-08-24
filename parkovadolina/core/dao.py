@@ -19,23 +19,23 @@ from parkovadolina.models.checked_group import CheckedGroupModel
 from parkovadolina.models.important_news import ImportantNewsModel
 from parkovadolina.models.building_plan import BuildingPlanModel
 
-class SpreadSheet:
+class DAOStorage:
 
     SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly',
               'https://www.googleapis.com/auth/spreadsheets']
 
-    def __init__(self, sheet_id):
+    def __init__(self, sheet_id, cache_ttl):
         self._service = self._init_service()
-        self.rules = RulesModel(self._service, sheet_id)
-        self.faq = FAQModel(self._service, sheet_id)
-        self.ig = IGModel(self._service, sheet_id)
-        self.users = UsersModel(self._service, sheet_id)
-        self.persons = PersonsModel(self._service, sheet_id)
-        self.activity = ActivitysModel(self._service, sheet_id)
-        self.checked_group = CheckedGroupModel(self._service, sheet_id)
-        self.important_news = ImportantNewsModel(self._service, sheet_id)
-        self.building_plan = BuildingPlanModel(self._service, sheet_id)
-        self.building_status_results = BuildingStatusModel(self._service, sheet_id)
+        self.rules = RulesModel(self._service, sheet_id, cache_ttl)
+        self.faq = FAQModel(self._service, sheet_id, cache_ttl)
+        self.ig = IGModel(self._service, sheet_id, cache_ttl)
+        self.users = UsersModel(self._service, sheet_id, cache_ttl)
+        self.persons = PersonsModel(self._service, sheet_id, cache_ttl)
+        self.activity = ActivitysModel(self._service, sheet_id, cache_ttl)
+        self.checked_group = CheckedGroupModel(self._service, sheet_id, cache_ttl)
+        self.important_news = ImportantNewsModel(self._service, sheet_id, cache_ttl)
+        self.building_plan = BuildingPlanModel(self._service, sheet_id, cache_ttl)
+        self.building_status_results = BuildingStatusModel(self._service, sheet_id, cache_ttl)
         self.session = SessionModel()
         self.registraion_remained = RegistrationRemainderModel()
 
@@ -56,7 +56,3 @@ class SpreadSheet:
         socket.setdefaulttimeout(600)
         service = build('sheets', 'v4', credentials=creds)
         return service.spreadsheets()
-
-
-SPREADSHEET_ID = os.getenv("SPREADSHEET_ID", "1YcefukFGx7XKvT7oONpnn1nqDGpJUsP3CQdNCL8jt5w")
-dao = SpreadSheet(SPREADSHEET_ID)

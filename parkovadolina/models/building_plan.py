@@ -41,9 +41,10 @@ class BuildingPlanModel:
 
     RANGE_ID = 'Прогрес будівництва!A1:V'
 
-    def __init__(self, service, sheet):
+    def __init__(self, service, sheet, cache_ttl):
         self._service = service
         self._sheet = sheet
+        self._cache_ttl = cache_ttl
         self._map_dates = self._date_map(
             datetime.datetime(month=7, day=1, year=2020))
         self._data = self.load_data()

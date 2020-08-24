@@ -15,9 +15,10 @@ class ImportantNewsModel:
 
     RANGE_ID = 'Важливі новини!A2:D'
 
-    def __init__(self, service, sheet):
+    def __init__(self, service, sheet, cache_ttl):
         self._service = service
         self._sheet = sheet
+        self._cache_ttl = cache_ttl
         self._ttl = time.time()
         self.__data = []
 
@@ -25,7 +26,7 @@ class ImportantNewsModel:
     def _data(self):
         if time.time() >= self._ttl:
             self.__data = self.load_data()
-            self._ttl = time.time() + 86400 
+            self._ttl = time.time() + self._cache_ttl
         return self.__data
 
     def load_data(self):
