@@ -31,19 +31,18 @@ class BuildingStatusModel:
         self._service = service
         self._sheet = sheet
         self._ttl = time.time()
-        self.__data = self.load_data()
+        self.__data = {}
         self._ttl_building_status = time.time()
         self._building_status_results = {i: "1" for i in BUILDING_NUMBERS.keys()}
         
     @property
     def _data(self):
-        if time.time() <= self._ttl:
+        if time.time() >= self._ttl:
+            self._ttl = time.time() + 86400 
             self.__data = self.load_data()
         return self.__data
 
-
     def load_data(self):
-        self._ttl = time.time() + 86400 
         data = {}
         result = self._service.values().get(spreadsheetId=self._sheet,
                                             range=self.RANGE_ID).execute().get('values', [])

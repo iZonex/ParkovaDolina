@@ -1,3 +1,4 @@
+import time
 class ImportantNews:
 
     def __init__(self, dao, uid=None, username=None, text=None, date=None):
@@ -17,13 +18,21 @@ class ImportantNewsModel:
     def __init__(self, service, sheet):
         self._service = service
         self._sheet = sheet
-        self._data = []
+        self._ttl = time.time()
+        self.__data = []
 
-    def get(self, force=False):
-        if self._data and not force:
-            return self._data
+    @property
+    def _data(self):
+        if time.time() >= self._ttl:
+            self.__data = self.load_data()
+            self._ttl = time.time() + 86400 
+        return self.__data
+
+    def load_data(self):
         result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])
-        self._data = [ImportantNews(self, uid, username, text, date) for uid, username, text, date in result][::-1]
+        return [ImportantNews(self, uid, username, text, date) for uid, username, text, date in result][::-1]
+    
+    def get(self):
         return self._data
         
     def create(self, username, text, date):
@@ -31,4 +40,4 @@ class ImportantNewsModel:
         values = [[next_row, username, text, date]]
         body = {'values': values, 'majorDimension' : 'ROWS'}
         self._service.values().update(spreadsheetId=self._sheet, range=f'Важливі новини!A{next_row}:D', valueInputOption='RAW', body=body).execute()
-        self.get(force=True)
+        self.__data.insert(0, ImportantNews(next_row, username, text, date))
