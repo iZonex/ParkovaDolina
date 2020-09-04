@@ -68,8 +68,11 @@ class BuildingStatusModel:
             start_date = datetime.now().replace(day=1)
             for building_id in self._data.keys():
                 result_status = Counter([obj.status for obj in self._data[building_id] if obj.date >= start_date])
-                self._building_status_results[building_id] = str(result_status.most_common(1)[0][0])
-            self._ttl_building_status = time.time() + 86400
+                try:
+                    self._building_status_results[building_id] = str(result_status.most_common(1)[0][0])
+                except IndexError:
+                    self._building_status_results[building_id] = "1"
+            self._ttl_building_status = time.time() + self._cache_ttl
         return self._building_status_results
 
     def create(self, building_name,	status,	user_id):
