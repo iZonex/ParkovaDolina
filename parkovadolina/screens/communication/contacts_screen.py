@@ -1,11 +1,11 @@
 from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from parkovadolina.core.constants import EXIT
+from parkovadolina.core.constants import MAIN_MENU
 
 class ContactsScreen(Screen):
 
-    SECTIONS = [EXIT]
+    SECTIONS = [MAIN_MENU]
 
     TEXT_DATA = {
         "Контакт Строй Сіті Development": (
@@ -48,7 +48,7 @@ class ContactsScreen(Screen):
             keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
             for i in self.TEXT_DATA.keys():
                 keyboard.add(types.KeyboardButton(text=i))
-            keyboard.add(types.KeyboardButton(text=EXIT))
+            keyboard.add(types.KeyboardButton(text="↩️Назад"))
             await self.bot.send_message(message.chat.id, "Оберіть контакт.", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     @staticmethod

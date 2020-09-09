@@ -1,11 +1,11 @@
 from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from parkovadolina.core.constants import EXIT
+from parkovadolina.core.constants import MAIN_MENU
 
 class PersonsScreen(Screen):
 
-    SECTIONS = [EXIT]
+    SECTIONS = [MAIN_MENU]
 
     def __init__(self, bot, dao):
         self.bot = bot
@@ -20,7 +20,7 @@ class PersonsScreen(Screen):
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
         for i in persons:
             keyboard.add(types.KeyboardButton(text=f"Персона, {i.full_name}"))
-        keyboard.add(types.KeyboardButton(text=EXIT))
+        keyboard.add(types.KeyboardButton(text=MAIN_MENU))
         await self.bot.send_message(message.chat.id, "Оберіть персону.", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
     def match_context(self, message):

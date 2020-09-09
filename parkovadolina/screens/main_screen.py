@@ -1,6 +1,6 @@
 from parkovadolina.core.screen import Screen
 from aiogram.types.message import ParseMode
-from parkovadolina.core.constants import EXIT
+from parkovadolina.core.constants import MAIN_MENU
 from aiogram import types
 
 
@@ -36,6 +36,6 @@ class MainScreen(Screen):
 
     @staticmethod
     def match(message):
-        if message.text.startswith(EXIT) or message.text.startswith("Головне меню") or message.text.startswith("/start"):
+        if message.text.startswith(MAIN_MENU) or message.text.startswith("Головне меню") or message.text.startswith("/start"):
             return True
         return False

@@ -2,7 +2,7 @@ from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types import ParseMode
 from datetime import datetime
-from parkovadolina.core.constants import EXIT
+from parkovadolina.core.constants import MAIN_MENU
 
 class ImportantNewsScreen(Screen):
 
@@ -40,7 +40,7 @@ class ImportantNewsScreen(Screen):
     async def screen(self, message):
         news_list = self.dao.important_news.get()
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-        keyboard.add(types.KeyboardButton(text=EXIT))
+        keyboard.add(types.KeyboardButton(text=MAIN_MENU))
         
         if not news_list:
             await self.bot.send_message(message.chat.id, "Вибачте поки немає важливих новин.", reply_markup=keyboard, parse_mode=ParseMode.HTML)

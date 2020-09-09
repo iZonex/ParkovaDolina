@@ -1,4 +1,4 @@
-from parkovadolina.core.constants import EXIT
+from parkovadolina.core.constants import EXIT, MAIN_MENU
 
 class Session:
 
@@ -15,7 +15,7 @@ class Session:
 
     def register_context(self, route=None, text=None):
         cut_index = self.get_index(text)
-        if text == EXIT or text == "Головне меню":
+        if text == EXIT or text == MAIN_MENU:
             self._context = []
         elif text == "↩️Назад":
             self._context = self._context[:-1]

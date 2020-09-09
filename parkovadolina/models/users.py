@@ -1,4 +1,4 @@
-from parkovadolina.core.constants import EXIT
+from parkovadolina.core.constants import MAIN_MENU
 class User:
 
     def __init__(self, dao, uid, user_id, agreement):

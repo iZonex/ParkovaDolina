@@ -3,11 +3,11 @@ from parkovadolina.models.building_constants import BUILDING_NUMBERS, STATUS_MAP
 from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from parkovadolina.core.constants import EXIT
+from parkovadolina.core.constants import MAIN_MENU
 
 class BuildingMainScreen(Screen):
 
-    SECTIONS = [EXIT]
+    SECTIONS = [MAIN_MENU]
 
     def __init__(self, bot, dao):
         self.bot = bot

@@ -1,4 +1,4 @@
-from core.constants import EXIT
+from core.constants import MAIN_MENU
 
 
 # TODO Is still in progress

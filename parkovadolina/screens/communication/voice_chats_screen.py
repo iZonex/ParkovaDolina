@@ -1,11 +1,11 @@
 from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from parkovadolina.core.constants import EXIT
+from parkovadolina.core.constants import MAIN_MENU
 
 class VoiceChatsScreen(Screen):
 
-    SECTIONS = [EXIT]
+    SECTIONS = [MAIN_MENU]
     LINK = "https://discord.gg/XrTMwWz"
 
     def __init__(self, bot, dao):

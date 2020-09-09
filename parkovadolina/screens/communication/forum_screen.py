@@ -1,11 +1,11 @@
 from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from parkovadolina.core.constants import EXIT
+from parkovadolina.core.constants import MAIN_MENU
 
 class ForumScreen(Screen):
 
-    SECTIONS = [EXIT]
+    SECTIONS = [MAIN_MENU]
     FORUM_LINK = "https://parkova-dolyna.com/"
 
     def __init__(self, bot, dao):
