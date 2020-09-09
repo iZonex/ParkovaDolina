@@ -5,7 +5,7 @@ from parkovadolina.core.constants import EXIT
 
 class CommunicationScreen(Screen):
 
-    SECTIONS = ["Чати інвесторів", "Голосовий чат", "Форум інвесторів", EXIT]
+    SECTIONS = ["Чати інвесторів", "Голосовий чат", "Форум інвесторів", "Контакти", EXIT]
 
     def __init__(self, bot, dao):
         self.bot = bot
