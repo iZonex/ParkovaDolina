@@ -43,6 +43,9 @@ class PersonsScreen(Screen):
         else:
             await self.menu(message)
 
+    def match_context(self, message):
+        return message.text.startswith("↩️Назад")
+
     @staticmethod
     def match(message):
         if message.text.startswith("Персона,") or message.text.startswith("🧩Персони"):

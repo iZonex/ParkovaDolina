@@ -20,6 +20,9 @@ class CommunicationScreen(Screen):
         keyboard.add(*self.sections)
         await self.bot.send_message(message.chat.id, "Оберіть тип зв'язку.", reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
+    def match_context(self, message):
+        return message.text.startswith("↩️Назад")
+
     @staticmethod
     def match(message):
         return message.text.startswith("👂Комунікація") or False
