@@ -47,7 +47,7 @@ async def middleware(message):
 async def public_chat_actions_middleware(message):
     await on_message_wo_registration.action(message)
     await important_news_action.action(message)
-    await on_karma_action.action(message)
+    # await on_karma_action.action(message)
 
 async def private_chat_actions_middleware(message):
     await router.match_pattern(message)
