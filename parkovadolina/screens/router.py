@@ -1,3 +1,4 @@
+from parkovadolina.screens.air_clean_screen import AirCleanScreen
 from parkovadolina.screens.services_screen import ServicesScreen
 from parkovadolina.core.router import Router
 from .important_news_screen import ImportantNewsScreen
@@ -26,6 +27,7 @@ class MainRouter(Router):
         BuildingRouter,
         RulesScreen,
         ServicesScreen,
+        AirCleanScreen,
     )
 
     default_route = MainScreen
