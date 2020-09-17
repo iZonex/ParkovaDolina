@@ -23,7 +23,7 @@ important_news_action = ImportantNewsAction(bot, dao)
 router = MainRouter(bot, dao)
 on_join_action = OnJoinGroupAction(bot, dao)
 on_message_wo_registration = OnMessageWORegistrationAction(bot, dao)
-on_karma_action = OnKarmaAction(bot, dao)
+# on_karma_action = OnKarmaAction(bot, dao)
 
 @dp.callback_query_handler() 
 async def inline_kb_answer_callback_handler(query: types.CallbackQuery):
