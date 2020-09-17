@@ -1,3 +1,4 @@
+from parkovadolina.screens.services_screen import ServicesScreen
 from parkovadolina.core.router import Router
 from .important_news_screen import ImportantNewsScreen
 from .main_screen import MainScreen
@@ -24,6 +25,7 @@ class MainRouter(Router):
         ImportantNewsScreen,
         BuildingRouter,
         RulesScreen,
+        ServicesScreen,
     )
 
     default_route = MainScreen

@@ -1,5 +1,6 @@
 import logging
 import os
+from parkovadolina.actions.karma_action import OnKarmaAction
 from parkovadolina.actions.on_ignore_registration import OnMessageWORegistrationAction
 from aiogram import Bot, Dispatcher, executor, types
 from parkovadolina.screens.router import MainRouter
@@ -22,6 +23,7 @@ important_news_action = ImportantNewsAction(bot, dao)
 router = MainRouter(bot, dao)
 on_join_action = OnJoinGroupAction(bot, dao)
 on_message_wo_registration = OnMessageWORegistrationAction(bot, dao)
+on_karma_action = OnKarmaAction(bot, dao)
 
 @dp.callback_query_handler() 
 async def inline_kb_answer_callback_handler(query: types.CallbackQuery):
@@ -31,23 +33,28 @@ async def inline_kb_answer_callback_handler(query: types.CallbackQuery):
 async def on_user_joins(message):
     await on_join_action.action(message)
 
-@dp.message_handler()
-async def main_actions(message):
-    create_session(message)
-    # logger.info(message.text)
-    if message.chat.type == "private":
-        await private_chat(message)
-    else:
-        await on_message_wo_registration.action(message)
-        await important_news_action.action(message)
-
 def create_session(message):
     user_id = message.from_user.id
     dao.session.create(user_id)
 
-async def private_chat(message):
+async def middleware(message):
+    create_session(message)
+    if message.chat.type == "private":
+        await private_chat_actions_middleware(message)
+    else:
+        await public_chat_actions_middleware(message)
+
+async def public_chat_actions_middleware(message):
+    await on_message_wo_registration.action(message)
+    await important_news_action.action(message)
+    await on_karma_action.action(message)
+
+async def private_chat_actions_middleware(message):
     await router.match_pattern(message)
 
+@dp.message_handler()
+async def main_actions(message):
+    await middleware(message)
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
