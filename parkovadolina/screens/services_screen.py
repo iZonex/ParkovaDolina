@@ -7,7 +7,7 @@ class ServicesScreen(Screen):
 
     SECTIONS = [MAIN_MENU]
 
-    LINK = "https://docs.google.com/spreadsheets/d/1-e1zIHAdkUViuqIhbNTJRKtOd0ja6PjCSawMxnvVSu4/edit#gid=0"
+    LINK = "https://docs.google.com/spreadsheets/d/1-e1zIHAdkUViuqIhbNTJRKtOd0ja6PjCSawMxnvVSu4/edit?usp=sharing"
 
     def __init__(self, bot, dao):
         self.bot = bot
