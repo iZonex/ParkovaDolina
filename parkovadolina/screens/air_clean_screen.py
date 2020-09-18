@@ -19,6 +19,7 @@ from parkovadolina.core.constants import MAIN_MENU
 class AirCleanScreen(Screen):
 
     SECTIONS = [MAIN_MENU]
+    SENSOR_ID = '49'
 
     def __init__(self, bot, dao):
         self.bot = bot
@@ -29,17 +30,22 @@ class AirCleanScreen(Screen):
         return [types.KeyboardButton(i) for i in self.SECTIONS]
 
     async def screen(self, message):
-        data = await get_air_sensor_info()
-        text_body = (
-            f'<b>За адресою Кайсарова 7/9</b>\n'
-            f'наступні показники датчиків якості повітря\n\n'
-            f"🌤PM2.5: {data['particles']['pm1']:.2f} мкг/м3\n"
-            f"🌤PM10: {data['particles']['pm10']:.2f} мкг/м3\n"
-            f"🌤PM1: {data['particles']['pm25']:.2f} мкг/м3\n"
-            f"💦Вологість: {data['weather']['humidity']:.0f} %\n"
-            f"🌡Температура: {data['weather']['temperature']:.0f} °C\n"
-
-        )
+        sensor_data = await get_air_sensor_info(self.SENSOR_ID)
+        if sensor_data:
+            text_body = (
+                f'<b>За адресою Кайсарова 7/9</b>\n'
+                f'наступні показники датчиків якості повітря\n\n'
+                f"🌤PM2.5: {sensor_data['particles']['pm1']:.2f} мкг/м3\n"
+                f"🌤PM10: {sensor_data['particles']['pm10']:.2f} мкг/м3\n"
+                f"🌤PM1: {sensor_data['particles']['pm25']:.2f} мкг/м3\n"
+                f"💦Вологість: {sensor_data['weather']['humidity']:.0f} %\n"
+                f"🌡Температура: {sensor_data['weather']['temperature']:.0f} °C\n"
+            )
+        else:
+            text_body = (
+                f'<b>За адресою Кайсарова 7/9</b>\n'
+                f'Датчики якості повітря не доступні\n\n'
+            )
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
         keyboard.add(types.KeyboardButton(text=MAIN_MENU))
         await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode=ParseMode.HTML)
