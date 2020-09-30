@@ -19,7 +19,7 @@ from parkovadolina.core.constants import MAIN_MENU
 class AirCleanScreen(Screen):
 
     SECTIONS = [MAIN_MENU]
-    SENSOR_ID = '49'
+    SENSOR_ID = '4'
 
     def __init__(self, bot, dao):
         self.bot = bot
