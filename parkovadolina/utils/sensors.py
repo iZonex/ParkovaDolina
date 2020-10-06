@@ -4,6 +4,9 @@ import asyncio
 
 URL = "https://misto.lun.ua/api/v1/sensors/now"
 
+def avg(values):
+    return sum(values) / len(values)
+
 async def get_air_sensor_info(sensor_id):
     async with aiohttp.ClientSession() as session:
         async with session.get("https://misto.lun.ua/api/v1/sensors/now") as resp:
@@ -21,4 +24,4 @@ async def get_air_sensor_info(sensor_id):
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(get_sensor_info('49'))
+    loop.run_until_complete(get_air_sensor_info('49'))
