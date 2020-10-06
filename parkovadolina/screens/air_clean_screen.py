@@ -1,3 +1,4 @@
+from parkovadolina.utils.weather import get_weather_info
 from parkovadolina.utils.rad import get_rad_sensor_info
 from parkovadolina.utils.sensors import get_air_sensor_info
 from parkovadolina.core.screen import Screen
@@ -33,6 +34,8 @@ class AirCleanScreen(Screen):
     async def screen(self, message):
         sensor_data = await get_air_sensor_info(self.SENSOR_ID)
         rad_sensor_data = await get_rad_sensor_info()
+        weather_data = await get_weather_info()
+
         if sensor_data:
             text_body = (
                 f'<b>За адресою Кайсарова 7/9</b>\n'
@@ -41,7 +44,9 @@ class AirCleanScreen(Screen):
                 f"🌤PM10: {sensor_data['particles']['pm10']:.2f} мкг/м3\n"
                 f"🌤PM1: {sensor_data['particles']['pm25']:.2f} мкг/м3\n"
                 f"💦Вологість: {sensor_data['weather']['humidity']:.0f} %\n"
-                f"🌡Температура: {sensor_data['weather']['temperature']:.0f} °C\n"
+                f"🌡Температура: {weather_data['temp']:.0f} °C\n"
+                f"⚗️Точка роси: {weather_data['dewpt']:.0f} °C\n"
+                f"💨Вітер: {weather_data['wind_speed']:.0f} м/г\n"
                 f"☢Радиационной Фон: {rad_sensor_data} мкЗв/ч\n"
             )
         else:
