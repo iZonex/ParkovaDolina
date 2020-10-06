@@ -12,10 +12,6 @@ class AirCleanScreen(Screen):
     def __init__(self, bot, dao):
         self.bot = bot
         self.dao = dao
-        self.sections = self._build_sections()
-
-    def _build_sections(self):
-        return [types.KeyboardButton(i) for i in self.SECTIONS]
 
     async def screen(self, message):
         sensor_data = await get_air_sensor_info(self.SENSOR_ID)
