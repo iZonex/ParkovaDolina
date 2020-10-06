@@ -4,23 +4,9 @@ from parkovadolina.utils.sensors import get_air_sensor_info
 from parkovadolina.core.screen import Screen
 from aiogram import types
 from aiogram.types.message import ParseMode
-from parkovadolina.core.constants import MAIN_MENU
-
-# {'particles': {'pm1': 9.9,
-#                'pm10': 10.9,
-#                'pm25': 15.5,
-#                'timestamp': '2020-09-17T12:50:00Z'},
-#  'station': {'coordinates': {'lat': 30.4678111, 'lng': 50.3960801},
-#              'name': '49'},
-#  'timestamp': '2020-09-17T12:50:00Z',
-#  'weather': {'humidity': 39.48701555302285,
-#              'pressure': 98793.39476351772,
-#              'temperature': 28.38482402977713,
-#              'timestamp': '2020-09-17T12:50:00Z'}}
 
 class AirCleanScreen(Screen):
 
-    SECTIONS = [MAIN_MENU]
     SENSOR_ID = '4'
 
     def __init__(self, bot, dao):
@@ -55,10 +41,8 @@ class AirCleanScreen(Screen):
                 f'<b>За адресою Кайсарова 7/9</b>\n'
                 f'Датчики якості повітря не доступні\n\n'
             )
-        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-        keyboard.add(types.KeyboardButton(text=MAIN_MENU))
-        await self.bot.send_message(message.chat.id, text_body, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+        await self.bot.send_message(message.chat.id, text_body, parse_mode=ParseMode.HTML)
 
     @staticmethod
     def match(message):
-        return message.text.startswith("🌤Чистота повітря") or False
+        return message.text.startswith("🌤Клімат") or False
