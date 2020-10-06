@@ -15,9 +15,10 @@ async def get_weather_info(station="UKKK"):
                 if i.startswith(station.upper()):
                     obs = Metar.Metar(i)
                     obj = {
-                        "wind_speed": obs.wind_speed.value("MPH"),
+                        "wind_speed": obs.wind_speed.value("MPS"),
                         "temp": obs.temp.value("C"),
-                        "dewpt": obs.dewpt.value("C")
+                        "dewpt": obs.dewpt.value("C"),
+                        "press": obs.press.value("MB")
                     }
     return obj
 

@@ -45,8 +45,9 @@ class AirCleanScreen(Screen):
                 f"🌤PM1: {sensor_data['particles']['pm25']:.2f} мкг/м3\n"
                 f"💦Вологість: {sensor_data['weather']['humidity']:.0f} %\n"
                 f"🌡Температура: {weather_data['temp']:.0f} °C\n"
-                f"⚗️Точка роси: {weather_data['dewpt']:.0f} °C\n"
-                f"💨Вітер: {weather_data['wind_speed']:.0f} м/г\n"
+                f"💧Точка роси: {weather_data['dewpt']:.0f} °C\n"
+                f"💨Вітер: {weather_data['wind_speed']:.0f} м/с\n"
+                f"🩺Тиск: {weather_data['press']:.0f} мбар\n"
                 f"☢Радиационной Фон: {rad_sensor_data} мкЗв/ч\n"
             )
         else:
