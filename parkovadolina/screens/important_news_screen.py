@@ -39,13 +39,11 @@ class ImportantNewsScreen(Screen):
 
     async def screen(self, message):
         news_list = self.dao.important_news.get()
-        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-        keyboard.add(types.KeyboardButton(text=MAIN_MENU))
         
         if not news_list:
-            await self.bot.send_message(message.chat.id, "Вибачте поки немає важливих новин.", reply_markup=keyboard, parse_mode=ParseMode.HTML)
+            await self.bot.send_message(message.chat.id, "Вибачте поки немає важливих новин.", parse_mode=ParseMode.HTML)
         else:
-            await self.bot.send_message(message.chat.id, "<b>Новини за тиждень:</b>\n\n", reply_markup=keyboard, parse_mode=ParseMode.HTML)
+            await self.bot.send_message(message.chat.id, "<b>Новини за тиждень:</b>\n\n", parse_mode=ParseMode.HTML)
             keyboard_markup = types.InlineKeyboardMarkup(row_width=2)
 
             text_and_data = (

@@ -10,19 +10,12 @@ class FAQScreen(Screen):
     def __init__(self, bot, dao):
         self.bot = bot
         self.dao = dao
-        self.sections = self._build_sections()
-
-    def _build_sections(self):
-        return [types.KeyboardButton(i) for i in self.SECTIONS]
 
     async def details(self, message):
         question = message.text.split("Запитання, ")[1]
         faq = self.dao.faq.get_answer_by_question(question)
         message_text = f"{faq.answer}\n\n"
-        keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-        keyboard.add(types.KeyboardButton(text="🔍Відповіді на запитання"))
-        keyboard.add(types.KeyboardButton(text=MAIN_MENU))
-        await self.bot.send_message(message.chat.id, message_text, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+        await self.bot.send_message(message.chat.id, message_text, parse_mode=ParseMode.HTML)
 
     async def menu(self, message):
         faqs = self.dao.faq.get()
