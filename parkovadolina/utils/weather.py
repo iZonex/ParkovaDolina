@@ -13,11 +13,12 @@ async def get_weather_info(station="UKKK"):
             data = await resp.text()
             for i in data.split('\n'):
                 if i.startswith(station.upper()):
-                    obs = Metar.Metar(i)    
+                    obs = Metar.Metar(i)
+                    print(obs)    
                     obj = {
                         "wind": {
-                            "from": obs.wind_dir_from.compass(),
-                            "to": obs.wind_dir_to.compass(),
+                            "from": obs.wind_dir_from.compass() if obs.wind_dir_from else None,
+                            "to": obs.wind_dir_to.compass() if obs.wind_dir_to else None,
                             "speed": obs.wind_speed.value('MPS')
                         },
                         "temp": obs.temp.value("C"),

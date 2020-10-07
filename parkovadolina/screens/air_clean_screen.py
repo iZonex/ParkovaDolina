@@ -26,13 +26,15 @@ def format_wind_direction(wind_data):
         "NNW": "Північного західу"
     }
 
-    wind_from = COMPASS_TRANSLATION_MAP[wind_data["from"]]
-    wind_speed = wind_data["speed"]
-    return f"З {wind_from} із швидкістю {wind_speed:.0f} м/с"
+    wind_from = wind_data.get("from")
+    if wind_from:
+        wind_speed = wind_data["speed"]
+        return f"З {COMPASS_TRANSLATION_MAP[wind_from]} із швидкістю {wind_speed:.0f} м/с"
+    return "немає"
 
 class AirCleanScreen(Screen):
 
-    SENSOR_ID = "4"
+    SENSOR_ID = "48"
     AIR_PORT = "UKKK"
 
     def __init__(self, bot, dao):
