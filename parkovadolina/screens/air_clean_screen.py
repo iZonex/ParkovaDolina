@@ -6,6 +6,30 @@ from parkovadolina.utils.sensors import get_air_sensor_info
 from parkovadolina.core.screen import Screen
 from aiogram.types.message import ParseMode
 
+def format_wind_direction(wind_data):
+    COMPASS_TRANSLATION_MAP = { 
+        "N": "Північи",
+        "NNE": "Північного східу",
+        "NE": "Північного східу",
+        "ENE": "Східу",
+        "E": "Східу",
+        "ESE": "Східу",
+        "SE": "Південного східу",
+        "SSE": "Південного східу",
+        "S": "Південья",
+        "SSW": "Південья",
+        "SW": "Південного західу",
+        "WSW": "Західу",
+        "W": "Західу",
+        "WNW": "Західу",
+        "NW": "Північного західу",
+        "NNW": "Північного західу"
+    }
+
+    wind_from = COMPASS_TRANSLATION_MAP[wind_data["from"]]
+    wind_speed = wind_data["speed"]
+    return f"З {wind_from} із швидкістю {wind_speed:.0f} м/с"
+
 class AirCleanScreen(Screen):
 
     SENSOR_ID = "4"
@@ -37,7 +61,7 @@ class AirCleanScreen(Screen):
                 f"💦Вологість: {sensor_data['weather']['humidity']:.0f} %\n"
                 f"🌡Температура: {weather_data['temp']:.0f} °C\n"
                 f"💧Точка роси: {weather_data['dewpt']:.0f} °C\n"
-                f"💨Вітер: {weather_data['wind_speed']:.0f} м/с\n"
+                f"💨Вітер: {format_wind_direction(weather_data['wind'])}\n"
                 f"🩺Тиск: {weather_data['press']:.0f} мбар\n"
                 f"☢Радиационной Фон: {rad_sensor_data} мкЗв/ч\n"
             )
