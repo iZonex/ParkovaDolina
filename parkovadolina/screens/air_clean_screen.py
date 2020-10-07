@@ -1,3 +1,4 @@
+import asyncio
 from parkovadolina.utils.weather import get_weather_info
 from parkovadolina.utils.rad import get_rad_sensor_info
 from parkovadolina.utils.sensors import get_air_sensor_info
@@ -13,15 +14,16 @@ class AirCleanScreen(Screen):
         self.bot = bot
         self.dao = dao
 
-    async def screen(self, message):
-        sensor_data = await get_air_sensor_info(self.SENSOR_ID)
-        rad_sensor_data = await get_rad_sensor_info()
-        weather_data = await get_weather_info()
+    async def gether_data(self):
+        tasks = [get_air_sensor_info(self.SENSOR_ID), get_rad_sensor_info(), get_weather_info()]
+        return await asyncio.gather(*tasks)
 
+    async def screen(self, message):
+        sensor_data, rad_sensor_data, weather_data = await self.gether_data()
         if sensor_data:
             text_body = (
                 f'<b>За адресою Кайсарова 7/9</b>\n'
-                f'наступні показники датчиків якості повітря\n\n'
+                f'наступні показники датчиків\n\n'
                 f"🌤PM2.5: {sensor_data['particles']['pm1']:.2f} мкг/м3\n"
                 f"🌤PM10: {sensor_data['particles']['pm10']:.2f} мкг/м3\n"
                 f"🌤PM1: {sensor_data['particles']['pm25']:.2f} мкг/м3\n"
