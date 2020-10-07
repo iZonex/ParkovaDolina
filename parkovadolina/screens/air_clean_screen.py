@@ -1,26 +1,33 @@
 import asyncio
+import time
 from parkovadolina.utils.weather import get_weather_info
 from parkovadolina.utils.rad import get_rad_sensor_info
 from parkovadolina.utils.sensors import get_air_sensor_info
 from parkovadolina.core.screen import Screen
-from aiogram import types
 from aiogram.types.message import ParseMode
 
 class AirCleanScreen(Screen):
 
-    SENSOR_ID = '4'
+    SENSOR_ID = "4"
+    AIR_PORT = "UKKK"
 
     def __init__(self, bot, dao):
         self.bot = bot
         self.dao = dao
+        self.cache_ttl = 3600
+        self.last_cache = time.time()
+        self.cached_data = []
 
     async def gether_data(self):
-        tasks = [get_air_sensor_info(self.SENSOR_ID), get_rad_sensor_info(), get_weather_info()]
+        tasks = [get_air_sensor_info(self.SENSOR_ID), get_rad_sensor_info(), get_weather_info(self.AIR_PORT)]
         return await asyncio.gather(*tasks)
 
     async def screen(self, message):
-        sensor_data, rad_sensor_data, weather_data = await self.gether_data()
-        if sensor_data:
+        if self.last_cache <= time.time():
+            self.cached_data = await self.gether_data()
+            self.last_cache = time.time() + 3600
+        if all(self.cached_data):
+            sensor_data, rad_sensor_data, weather_data = self.cached_data
             text_body = (
                 f'<b>За адресою Кайсарова 7/9</b>\n'
                 f'наступні показники датчиків\n\n'
