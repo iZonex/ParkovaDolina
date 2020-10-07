@@ -39,6 +39,6 @@ class MainScreen(Screen):
 
     @staticmethod
     def match(message):
-        if message.text.startswith(MAIN_MENU) or message.text.startswith(EXIT) or message.text.startswith("❇️ Головне меню") or message.text.startswith("/start"):
+        if message.text.startswith("Головне меню") or message.text.startswith(MAIN_MENU) or message.text.startswith(EXIT) or message.text.startswith("❇️ Головне меню") or message.text.startswith("/start"):
             return True
         return False
