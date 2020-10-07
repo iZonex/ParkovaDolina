@@ -4,7 +4,7 @@ from metar import Metar
 
 async def get_weather_info(station="UKKK"):
     obj = {
-        "wind_speed": 0,
+        "wind": {"from": None, "to": None, "speed": 0},
         "temp": 0,
         "dewpt": 0
     }
@@ -13,8 +13,7 @@ async def get_weather_info(station="UKKK"):
             data = await resp.text()
             for i in data.split('\n'):
                 if i.startswith(station.upper()):
-                    obs = Metar.Metar(i)
-                    print(obs)    
+                    obs = Metar.Metar(i)   
                     obj = {
                         "wind": {
                             "from": obs.wind_dir_from.compass() if obs.wind_dir_from else None,
