@@ -36,11 +36,12 @@ class AirCleanScreen(Screen):
 
     SENSOR_ID = "48"
     AIR_PORT = "UKKK"
+    CACHE_TTL_LAG = 600
 
     def __init__(self, bot, dao):
         self.bot = bot
         self.dao = dao
-        self.cache_ttl = 3600
+        self.cache_ttl = self.CACHE_TTL_LAG
         self.last_cache = time.time()
         self.cached_data = []
 
@@ -51,7 +52,7 @@ class AirCleanScreen(Screen):
     async def screen(self, message):
         if self.last_cache <= time.time():
             self.cached_data = await self.gether_data()
-            self.last_cache = time.time() + 3600
+            self.last_cache = time.time() + self.CACHE_TTL_LAG
         if all(self.cached_data):
             sensor_data, rad_sensor_data, weather_data = self.cached_data
             text_body = (
