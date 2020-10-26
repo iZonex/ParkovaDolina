@@ -24,4 +24,4 @@ async def get_air_sensor_info(sensor_id):
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(get_air_sensor_info('48'))
+    loop.run_until_complete(get_air_sensor_info('49'))
