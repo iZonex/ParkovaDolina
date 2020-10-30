@@ -1,3 +1,4 @@
+from parkovadolina.screens.cameras_screen import CameraScreen
 from parkovadolina.screens.air_clean_screen import AirCleanScreen
 from parkovadolina.screens.services_screen import ServicesScreen
 from parkovadolina.core.router import Router
@@ -17,6 +18,7 @@ class MainRouter(Router):
 
     root = True
     routes = (
+        CameraScreen,
         CheckedGroupScreen,
         FAQScreen,
         ActivitysScreen,

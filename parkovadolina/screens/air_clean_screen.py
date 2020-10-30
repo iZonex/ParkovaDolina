@@ -61,7 +61,7 @@ class AirCleanScreen(Screen):
                 f"🌤PM2.5: {sensor_data['particles']['pm1']:.2f} мкг/м3\n"
                 f"🌤PM10: {sensor_data['particles']['pm10']:.2f} мкг/м3\n"
                 f"🌤PM1: {sensor_data['particles']['pm25']:.2f} мкг/м3\n"
-                #f"💦Вологість: {sensor_data['weather']['humidity']:.0f} %\n"
+                #f"💦Вологість: {sensor_data['wepython3 -m venvather']['humidity']:.0f} %\n"
                 f"🌡Температура: {weather_data['temp']:.0f} °C\n"
                 f"💧Точка роси: {weather_data['dewpt']:.0f} °C\n"
                 f"💨Вітер: {format_wind_direction(weather_data['wind'])}\n"

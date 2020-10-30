@@ -8,7 +8,7 @@ class ChatsListScreen(Screen):
     SECTIONS = [MAIN_MENU]
 
     CHATS = {
-        "Чат Строй Сіті Паркова Долина": "https://t.me/parkovayadolina",
+        "Чат Строй Сіті ЖК ГОЛОСІЇВСЬКА ДОЛИНА": "https://t.me/golosiivskadolyna",
         "Чат Строй Сіті": "https://t.me/stroycity_development",
         "Чат важливі повідомлення": "t.me/parkovadoluna",
         "Чат загальний групи": " t.me/parkovadolyna",
