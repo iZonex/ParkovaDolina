@@ -10,8 +10,8 @@ class CameraScreen(Screen):
     TEXT_DATA = {
         "📹Камера 1": "https://www.youtube.com/watch?v=MlYr5_WSM40 \n",
         "📹Камера 2": "https://www.youtube.com/watch?v=93dhtbJokjY \n",
-        "📹Камера 3": "https://www.youtube.com/watch?v=OwaHZqwtC3c \n",
-        "📹Камера 4": "https://www.youtube.com/watch?v=dUQrQiTjOVw \n",
+        "📹Камера 3": "https://www.youtube.com/watch?v=12jFkDH1fu0 \n",
+        "📹Камера 4": "https://www.youtube.com/watch?v=M6UtPg4mjgk \n",
     }
 
     def __init__(self, bot, dao):
