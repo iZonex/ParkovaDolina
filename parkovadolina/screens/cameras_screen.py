@@ -8,10 +8,10 @@ class CameraScreen(Screen):
     SECTIONS = [MAIN_MENU]
 
     TEXT_DATA = {
-        "📹Камера 1": "https://www.youtube.com/watch?v=MlYr5_WSM40 \n",
-        "📹Камера 2": "https://www.youtube.com/watch?v=93dhtbJokjY \n",
-        "📹Камера 3": "https://www.youtube.com/watch?v=12jFkDH1fu0 \n",
-        "📹Камера 4": "https://www.youtube.com/watch?v=M6UtPg4mjgk \n",
+        "📹Камера Будинок 1 (вид з двору)": "https://www.youtube.com/watch?v=MlYr5_WSM40 \n",
+        "📹Камера Вид з вул. Кайсарова": "https://www.youtube.com/watch?v=93dhtbJokjY \n",
+        "📹Камера Вид на 6-9 секції з двору": "https://www.youtube.com/watch?v=12jFkDH1fu0 \n",
+        "📹Камера Будинок 2": "https://www.youtube.com/watch?v=M6UtPg4mjgk \n",
     }
 
     def __init__(self, bot, dao):
