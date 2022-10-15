@@ -1,4 +1,4 @@
-FROM python:3.7.8-buster
+FROM python:3.7.14-buster
 
 RUN mkdir /bot
 COPY app.py /bot/app.py
