@@ -13,9 +13,8 @@ logger = logging.getLogger(__name__)
 
 STORAGE_CACHE_TTL = int(os.getenv("STORAGE_CACHE_TTL", 30))
 API_TOKEN = os.getenv("BOT_KEY", "1300282330:AAH36oyCMrLwcB5te9G56KQS9-eq2Xt9Dzg")
-SPREADSHEET_ID = os.getenv("SPREADSHEET_ID", "1YcefukFGx7XKvT7oONpnn1nqDGpJUsP3CQdNCL8jt5w")
 
-dao = DAOStorage(SPREADSHEET_ID, STORAGE_CACHE_TTL)
+dao = DAOStorage()
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 

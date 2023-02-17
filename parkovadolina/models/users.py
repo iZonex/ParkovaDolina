@@ -1,4 +1,6 @@
+import uuid
 from parkovadolina.core.constants import MAIN_MENU
+from .model import CSVModel
 class User:
 
     def __init__(self, dao, uid, user_id, agreement):
@@ -13,19 +15,17 @@ class User:
     def __contains__(self, item):
         return self.user_id == item
         
-class UsersModel:
+class UsersModel(CSVModel):
 
-    RANGE_ID = 'Користувачі!A2:C'
+    DB_NAME = "users"
 
-    def __init__(self, service, sheet, cache_ttl):
+    def __init__(self, service):
         self._service = service
-        self._sheet = sheet
-        self._cache_ttl = cache_ttl
         self._data = self.load_data()
 
     def load_data(self):
-        result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])
-        return {int(data[1]): User(self, data[0], int(data[1]), bool(data[2])) for data in result if data}
+        result = self.read_from_db()
+        return {int(data[1]): User(self, data[0], int(data[1]), bool(data[2])) for data in result[1:] if data}
 
     def get(self):
         return self._data
@@ -35,9 +35,8 @@ class UsersModel:
         
     def create(self, user_id):
         if not self.get_by_user_id(user_id):
-            next_row = len(self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])) + 2
-            values = [[next_row, user_id, 1]]
-            body = {'values': values, 'majorDimension' : 'ROWS'}
-            self._data[user_id] = User(self, next_row, int(user_id), bool(1))
-            self._service.values().update(spreadsheetId=self._sheet, range=f'Користувачі!A{next_row}:C', valueInputOption='RAW', body=body).execute()
+            uid = str(uuid.uuid4())
+            values = [uid, user_id, 1]
+            self._data[user_id] = User(self, uid, int(user_id), bool(1))
+            self.write_to_db(values)
             

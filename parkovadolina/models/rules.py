@@ -1,17 +1,18 @@
-class RulesModel:
 
-    RANGE_ID = 'Правила!A2:D'
+from .model import CSVModel
 
-    def __init__(self, service, sheet, cache_ttl):
+
+class RulesModel(CSVModel):
+
+    DB_NAME = "rules"
+
+    def __init__(self, service):
         self._service = service
-        self._sheet = sheet
-        self._cache_ttl = cache_ttl
         self._data = self.load_data()
 
     def load_data(self):
-        result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute()
-        values = result.get('values', [])
-        return [". ".join(row) for row in values]
+        result = self.read_from_db()[1:]
+        return "\n".join(". ".join(row) for row in result)
 
     def get(self):
         return self._data

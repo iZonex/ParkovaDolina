@@ -1,3 +1,6 @@
+from .model import CSVModel
+
+
 class Activity:
 
     def __init__(self, dao, title, actions_description, source_link, due_date, status):
@@ -9,19 +12,16 @@ class Activity:
         self.status = status
 
 
-class ActivitysModel:
+class ActivitysModel(CSVModel):
 
-    RANGE_ID = 'Активності!A2:E'
+    DB_NAME = "activitys"
 
-    def __init__(self, service, sheet, cache_ttl):
+    def __init__(self, service):
         self._service = service
-        self._sheet = sheet
-        self._cache_ttl = cache_ttl
         self._data = self.load_data()
 
     def load_data(self):
-        result = self._service.values().get(spreadsheetId=self._sheet,
-                                            range=self.RANGE_ID).execute().get('values', [])
+        result = self.read_from_db()[1:]
 
         self._data = [Activity(self, title, actions_description, source_link, due_date, status)
                       for title, actions_description, source_link, due_date, status in result]

@@ -1,3 +1,6 @@
+from .model import CSVModel
+
+
 class Person:
 
     def __init__(self, dao, full_name, photo, short_description, link):
@@ -10,19 +13,17 @@ class Person:
     def __contains__(self, item):
         return self.full_name.lower() == item.lower()
 
-class PersonsModel:
+class PersonsModel(CSVModel):
 
-    RANGE_ID = 'Персони!A2:D'
+    DB_NAME = "persons"
 
-    def __init__(self, service, sheet, cache_ttl):
+    def __init__(self, service):
         self._service = service
-        self._sheet = sheet
-        self._cache_ttl = cache_ttl
         self._data = self.load_data()
 
     def load_data(self):
-        result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute().get('values', [])
-        return [Person(self, full_name, photo, short_description, link) for full_name, photo, short_description, link in result]
+        result = self.read_from_db()
+        return [Person(self, full_name, photo, short_description, link) for full_name, photo, short_description, link in result[1:]]
 
     def get(self, force=False):
         return self._data

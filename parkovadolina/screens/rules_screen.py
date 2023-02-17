@@ -24,7 +24,7 @@ class RulesScreen(Screen):
 
     async def rules_chats(self, message):
         text_body = "📋 Правила чату:\n\n"
-        text_body += "\n\n".join(self.dao.rules.get())
+        text_body += "".join(self.dao.rules.get())
         available_options = ["🤝Згоден з правилами"]
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
         [ keyboard.add(types.KeyboardButton(text=i)) for i in available_options]

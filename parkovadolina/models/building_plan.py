@@ -2,6 +2,8 @@ import datetime
 from parkovadolina.models.building_constants import BUILDING_NUMBERS, BUILDING_NUMBERS_REVERSED
 from dateutil.relativedelta import relativedelta
 
+from .model import CSVModel
+
 
 class BuildingPlan:
 
@@ -37,25 +39,22 @@ class BuildingPlan:
 
 
 
-class BuildingPlanModel:
+class BuildingPlanModel(CSVModel):
 
-    RANGE_ID = 'Прогрес будівництва!A1:V'
+    DB_NAME = 'building_plan'
 
-    def __init__(self, service, sheet, cache_ttl):
+    def __init__(self, service):
         self._service = service
-        self._sheet = sheet
-        self._cache_ttl = cache_ttl
         self._map_dates = self._date_map(
-            datetime.datetime(month=7, day=1, year=2020))
+            datetime.datetime(month=2, day=1, year=2023))
         self._data = self.load_data()
 
     def _date_map(self, start_date):
-        return {str(i): (start_date + relativedelta(months=i)).date() for i in range(30)}
+        return {str(i): (start_date + relativedelta(months=i)).date() for i in range(150)}
 
     def load_data(self):
         data = {}
-        rows = self._service.values().get(spreadsheetId=self._sheet,
-                                          range=self.RANGE_ID).execute().get('values', [])
+        rows = self.read_from_db()
         header = [self._map_dates[i] for i in rows[0][1:]]
 
         for row in rows[1:]:

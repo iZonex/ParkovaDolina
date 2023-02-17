@@ -1,17 +1,18 @@
-class CheckedGroupModel:
 
-    RANGE_ID = 'Група підтверджених інвесторів!A2'
+from .model import CSVModel
 
-    def __init__(self, service, sheet, cache_ttl):
+
+class CheckedGroupModel(CSVModel):
+
+    DB_NAME = "checked_group"
+
+    def __init__(self, service):
         self._service = service
-        self._sheet = sheet
-        self._cache_ttl = cache_ttl
         self._data = self.load_data()
 
     def load_data(self):
-        result = self._service.values().get(spreadsheetId=self._sheet, range=self.RANGE_ID).execute()
-        values = result.get('values', [])
-        return [" ".join(row) for row in values][0]
+        values = self.read_from_db()
+        return " ".join(row[0] for row in values[1:])
 
     def get(self):
         return self._data

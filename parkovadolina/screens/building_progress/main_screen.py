@@ -14,7 +14,7 @@ class BuildingMainScreen(Screen):
         self.sections = self._build_sections()
 
     def _build_sections(self):
-        plans = self.dao.building_plan.get()
+        plans = {} # self.dao.building_plan.get()
         BUILDING_SECTIONS = [i.title for i in plans.values()]
         return [types.KeyboardButton(i) for i in BUILDING_SECTIONS + self.SECTIONS]
 

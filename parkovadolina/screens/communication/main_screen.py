@@ -5,7 +5,7 @@ from parkovadolina.core.constants import MAIN_MENU
 
 class CommunicationScreen(Screen):
 
-    SECTIONS = ["Чати інвесторів", "Голосовий чат", "Форум інвесторів", "Контакти", MAIN_MENU]
+    SECTIONS = ["Чати інвесторів", "Контакти", MAIN_MENU]
 
     def __init__(self, bot, dao):
         self.bot = bot
